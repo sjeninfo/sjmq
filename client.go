@@ -49,7 +49,7 @@ func (this *Client) SendEvent(sjEvent interface{}) error {
 
 func (this *Client) SubscribeEvent(sjEvent interface{}, handler func(*kubemq.EventStoreReceive), errCh chan error) {
 	channel := getChannelName(sjEvent)
-	eventsCh, err := this.KubemqClient.SubscribeToEventsStore(this.Ctx, channel, this.Group, errCh, kubemq.StartFromNewEvents())
+	eventsCh, err := this.KubemqClient.SubscribeToEventsStore(this.Ctx, channel, this.Group, errCh, kubemq.StartFromFirstEvent())
 	if err != nil {
 		errCh <- err
 		return
