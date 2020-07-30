@@ -9,6 +9,10 @@ import (
 	"github.com/kubemq-io/kubemq-go"
 )
 
+type IClient interface {
+	SendEvent(interface{}) error
+}
+
 type Client struct {
 	KubemqClient *kubemq.Client
 	Ctx          context.Context
