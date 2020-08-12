@@ -3,7 +3,6 @@ package sjmq
 import "time"
 
 type BankAccountImportedEvent struct {
-	ID             uint       `json:"id" mapstructure:"id"`
 	CreatedAt      time.Time  `json:"created_at" mapstructure:"created_at"`
 	UpdatedAt      time.Time  `json:"updated_at" mapstructure:"updated_at"`
 	DeletedAt      *time.Time `json:"deleted_at" mapstructure:"deleted_at"`

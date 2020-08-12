@@ -3,7 +3,6 @@ package sjmq
 import "time"
 
 type EmployeeImportedEvent struct {
-	ID           uint       `json:"id" mapstructure:"id"`
 	EmployeeNo   string     `json:"employee_no" mapstructure:"employee_no"`
 	Name         string     `json:"name" mapstructure:"name"`
 	UseIndex     string     `json:"use_index" mapstructure:"use_index"`
