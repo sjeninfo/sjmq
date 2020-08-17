@@ -19,7 +19,7 @@ type Client struct {
 	Group        string
 }
 
-func NewSjmqClient(host string, group string, ctx context.Context) (*Client, error) {
+func NewSjmqClient(ctx context.Context, host string, group string) (*Client, error) {
 	clientId := uuid.New()
 	kubemqClient, err := kubemq.NewClient(ctx,
 		kubemq.WithAddress(host, 50000),
@@ -38,22 +38,22 @@ func NewSjmqClient(host string, group string, ctx context.Context) (*Client, err
 	return sjmqClient, err
 }
 
-func (this *Client) SendEvent(sjEvent interface{}) error {
+func (c *Client) SendEvent(sjEvent interface{}) error {
 	channel := getChannelName(sjEvent)
 	data, err := json.Marshal(sjEvent)
 	if err != nil {
 		return err
 	}
-	_, err = this.KubemqClient.ES().
+	_, err = c.KubemqClient.ES().
 		SetChannel(channel).
 		SetBody(data).
-		Send(this.Ctx)
+		Send(c.Ctx)
 	return err
 }
 
-func (this *Client) SubscribeEvent(sjEvent interface{}, handler func(*kubemq.EventStoreReceive), errCh chan error) {
+func (c *Client) SubscribeEvent(sjEvent interface{}, handler func(*kubemq.EventStoreReceive), errCh chan error) {
 	channel := getChannelName(sjEvent)
-	eventsCh, err := this.KubemqClient.SubscribeToEventsStore(this.Ctx, channel, this.Group, errCh, kubemq.StartFromFirstEvent())
+	eventsCh, err := c.KubemqClient.SubscribeToEventsStore(c.Ctx, channel, c.Group, errCh, kubemq.StartFromFirstEvent())
 	if err != nil {
 		errCh <- err
 		return
@@ -65,7 +65,7 @@ func (this *Client) SubscribeEvent(sjEvent interface{}, handler func(*kubemq.Eve
 				return
 			case event := <-eventsCh:
 				go handler(event)
-			case <-this.Ctx.Done():
+			case <-c.Ctx.Done():
 				return
 			}
 		}
@@ -82,6 +82,6 @@ func getChannelName(v interface{}) string {
 	return channel
 }
 
-func (this *Client) Close() error {
-	return this.KubemqClient.Close()
+func (c *Client) Close() error {
+	return c.KubemqClient.Close()
 }
