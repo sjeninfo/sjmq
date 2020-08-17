@@ -14,26 +14,32 @@ type IClient interface {
 }
 
 type Client struct {
-	KubemqClient *kubemq.Client
-	Ctx          context.Context
-	Group        string
+	Sender    *kubemq.Client
+	Receivers []*kubemq.Client
+	Ctx       context.Context
+	Host      string
+	Group     string
 }
 
-func NewSjmqClient(ctx context.Context, host string, group string) (*Client, error) {
+func newMqClient(ctx context.Context, host string) (*kubemq.Client, error) {
 	clientId := uuid.New()
-	kubemqClient, err := kubemq.NewClient(ctx,
+	return kubemq.NewClient(ctx,
 		kubemq.WithAddress(host, 50000),
 		kubemq.WithClientId(clientId.String()),
 		kubemq.WithTransportType(kubemq.TransportTypeGRPC),
 		kubemq.WithAutoReconnect(true),
 		kubemq.WithMaxReconnects(2))
+}
+
+func NewSjmqClient(ctx context.Context, host string, group string) (*Client, error) {
+	sender, err := newMqClient(ctx, host)
 	if err != nil {
 		return nil, err
 	}
 	sjmqClient := &Client{
-		KubemqClient: kubemqClient,
-		Ctx:          ctx,
-		Group:        group,
+		Sender: sender,
+		Ctx:    ctx,
+		Group:  group,
 	}
 	return sjmqClient, err
 }
@@ -44,7 +50,7 @@ func (c *Client) SendEvent(sjEvent interface{}) error {
 	if err != nil {
 		return err
 	}
-	_, err = c.KubemqClient.ES().
+	_, err = c.Sender.ES().
 		SetChannel(channel).
 		SetBody(data).
 		Send(c.Ctx)
@@ -52,12 +58,20 @@ func (c *Client) SendEvent(sjEvent interface{}) error {
 }
 
 func (c *Client) SubscribeEvent(sjEvent interface{}, handler func(*kubemq.EventStoreReceive), errCh chan error) {
-	channel := getChannelName(sjEvent)
-	eventsCh, err := c.KubemqClient.SubscribeToEventsStore(c.Ctx, channel, c.Group, errCh, kubemq.StartFromFirstEvent())
+	receiver, err := newMqClient(c.Ctx, c.Host)
 	if err != nil {
 		errCh <- err
 		return
 	}
+	channel := getChannelName(sjEvent)
+	eventsCh, err := receiver.SubscribeToEventsStore(c.Ctx, channel, c.Group, errCh, kubemq.StartFromFirstEvent())
+	if err != nil {
+		_ = receiver.Close()
+		errCh <- err
+		return
+	}
+	c.Receivers = append(c.Receivers, receiver)
+	
 	go func() {
 		for {
 			select {
@@ -82,6 +96,9 @@ func getChannelName(v interface{}) string {
 	return channel
 }
 
-func (c *Client) Close() error {
-	return c.KubemqClient.Close()
+func (c *Client) Close() {
+	_ = c.Sender.Close()
+	for _, receiver := range c.Receivers {
+		_ = receiver.Close()
+	}
 }
