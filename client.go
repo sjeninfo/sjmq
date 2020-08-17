@@ -39,6 +39,7 @@ func NewSjmqClient(ctx context.Context, host string, group string) (*Client, err
 	sjmqClient := &Client{
 		Sender: sender,
 		Ctx:    ctx,
+		Host:   host,
 		Group:  group,
 	}
 	return sjmqClient, err
@@ -71,7 +72,7 @@ func (c *Client) SubscribeEvent(sjEvent interface{}, handler func(*kubemq.EventS
 		return
 	}
 	c.Receivers = append(c.Receivers, receiver)
-	
+
 	go func() {
 		for {
 			select {
