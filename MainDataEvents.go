@@ -500,8 +500,8 @@ type ProviderCreatedEvent struct {
 	OpeningAmount   float64    `json:"opening_amount" mapstructure:"opening_amount"`
 	MonthlyClose    string     `json:"monthly_close" mapstructure:"monthly_close"`
 	MonthlyRequest  string     `json:"monthly_request" mapstructure:"monthly_request"`
-	UpdatedBy       string     `json:"updated_by" mapstructure:"updated_by"`
-	CreatedBy       string     `json:"created_by" mapstructure:"created_by"`
+	UpdatedByID     uint       `json:"updated_by_id" mapstructure:"updated_by_id"`
+	CreatedByID     uint       `json:"created_by_id" mapstructure:"created_by_id"`
 	Used            bool       `json:"used" mapstructure:"used"`
 }
 
@@ -538,8 +538,8 @@ type ProviderImportedEvent struct {
 	OpeningAmount   float64    `json:"opening_amount" mapstructure:"opening_amount"`
 	MonthlyClose    string     `json:"monthly_close" mapstructure:"monthly_close"`
 	MonthlyRequest  string     `json:"monthly_request" mapstructure:"monthly_request"`
-	UpdatedBy       string     `json:"updated_by" mapstructure:"updated_by"`
-	CreatedBy       string     `json:"created_by" mapstructure:"created_by"`
+	UpdatedByID     uint       `json:"updated_by_id" mapstructure:"updated_by_id"`
+	CreatedByID     uint       `json:"created_by_id" mapstructure:"created_by_id"`
 	Used            bool       `json:"used" mapstructure:"used"`
 }
 
@@ -579,7 +579,7 @@ type ProviderUpdatedEvent struct {
 	OpeningAmount   float64    `json:"opening_amount" mapstructure:"opening_amount"`
 	MonthlyClose    string     `json:"monthly_close" mapstructure:"monthly_close"`
 	MonthlyRequest  string     `json:"monthly_request" mapstructure:"monthly_request"`
-	UpdatedBy       string     `json:"updated_by" mapstructure:"updated_by"`
-	CreatedBy       string     `json:"created_by" mapstructure:"created_by"`
+	UpdatedByID     uint       `json:"updated_by_id" mapstructure:"updated_by_id"`
+	CreatedByID     uint       `json:"created_by_id" mapstructure:"created_by_id"`
 	Used            bool       `json:"used" mapstructure:"used"`
 }
