@@ -1,4 +1,4 @@
-package sjmq
+package events
 
 import "time"
 

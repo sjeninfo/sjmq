@@ -1,105 +1,65 @@
 package sjmq
 
 import (
-	"context"
-	"encoding/json"
-	"reflect"
-
-	"github.com/google/uuid"
-	"github.com/kubemq-io/kubemq-go"
+	"github.com/pkg/errors"
+	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
-type IClient interface {
-	SendEvent(interface{}) error
-}
-
 type Client struct {
-	Sender    *kubemq.Client
-	Receivers []*kubemq.Client
-	Ctx       context.Context
-	Host      string
-	Group     string
+	Receiver *Receiver
+	Notifier *Notifier
+	DB       *gorm.DB
 }
 
-func newMqClient(ctx context.Context, host string) (*kubemq.Client, error) {
-	clientId := uuid.New()
-	return kubemq.NewClient(ctx,
-		kubemq.WithAddress(host, 50000),
-		kubemq.WithClientId(clientId.String()),
-		kubemq.WithTransportType(kubemq.TransportTypeGRPC),
-		kubemq.WithAutoReconnect(true),
-		kubemq.WithMaxReconnects(2))
+func NewClient(
+	publisherHost string,
+	dbType string,
+	dsn string,
+	mqHost string,
+	group string,
+) *Client {
+	c := new(Client)
+	db, err := initialDB(dbType, dsn)
+	if err != nil {
+		panic(err)
+	}
+	c.DB = db
+	c.Notifier = NewNotifier(publisherHost, dbType, dsn)
+	c.Receiver = NewReceiver(mqHost, group)
+	outboxRepo := NewOutboxRepository(NewGormDBContext(db))
+	if outboxRepo.HasMessage() {
+		c.Notifier.Notify()
+	}
+	return c
 }
 
-func NewSjmqClient(ctx context.Context, host string, group string) (*Client, error) {
-	sender, err := newMqClient(ctx, host)
+func (c *Client) NewSender() (ISender, *SenderContext) {
+	ctx := NewSenderContext(c.DB, c.Notifier.Notify)
+	s := NewSender(ctx)
+	return s, ctx
+}
+
+func initialDB(dbType, dsn string) (*gorm.DB, error) {
+	var db *gorm.DB
+	var err error
+	switch dbType {
+	case "mssql":
+		db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	case "mysql":
+		db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	case "postgres":
+		db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	case "sqlite3":
+		db, err = gorm.Open(sqlite.Open(dsn), &gorm.Config{})
+	default:
+		err = errors.New("unsupported database type")
+	}
 	if err != nil {
 		return nil, err
 	}
-	sjmqClient := &Client{
-		Sender: sender,
-		Ctx:    ctx,
-		Host:   host,
-		Group:  group,
-	}
-	return sjmqClient, err
-}
-
-func (c *Client) SendEvent(sjEvent interface{}) error {
-	channel := getChannelName(sjEvent)
-	data, err := json.Marshal(sjEvent)
-	if err != nil {
-		return err
-	}
-	_, err = c.Sender.ES().
-		SetChannel(channel).
-		SetBody(data).
-		Send(c.Ctx)
-	return err
-}
-
-func (c *Client) SubscribeEvent(sjEvent interface{}, handler func(*kubemq.EventStoreReceive), errCh chan error) {
-	receiver, err := newMqClient(c.Ctx, c.Host)
-	if err != nil {
-		errCh <- err
-		return
-	}
-	channel := getChannelName(sjEvent)
-	eventsCh, err := receiver.SubscribeToEventsStore(c.Ctx, channel, c.Group, errCh, kubemq.StartFromFirstEvent())
-	if err != nil {
-		_ = receiver.Close()
-		errCh <- err
-		return
-	}
-	c.Receivers = append(c.Receivers, receiver)
-
-	go func() {
-		for {
-			select {
-			case <-errCh:
-				return
-			case event := <-eventsCh:
-				go handler(event)
-			case <-c.Ctx.Done():
-				return
-			}
-		}
-	}()
-}
-
-func getChannelName(v interface{}) string {
-	var channel string
-	if reflect.TypeOf(v).Kind() == reflect.Ptr {
-		channel = reflect.TypeOf(v).Elem().Name()
-	} else {
-		channel = reflect.TypeOf(v).Name()
-	}
-	return channel
-}
-
-func (c *Client) Close() {
-	_ = c.Sender.Close()
-	for _, receiver := range c.Receivers {
-		_ = receiver.Close()
-	}
+	db.AutoMigrate(&Message{})
+	return db, nil
 }
