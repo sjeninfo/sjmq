@@ -21,11 +21,14 @@ func NewNotifier(publisherHost, dbType, dsn string) *Notifier {
 		"db_type": dbType,
 		"dsn":     dsn,
 	})
-	return &Notifier{
+
+	n := &Notifier{
 		PublisherHost: publisherHost,
 		Notification:  notification,
 		fireNotifyCh:  make(chan bool, 0),
 	}
+	go n.notifyHandler()
+	return n
 }
 
 func (n *Notifier) notifyHandler() {

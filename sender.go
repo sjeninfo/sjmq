@@ -12,6 +12,7 @@ type Sender struct {
 func NewSender(ctx *SenderContext) *Sender {
 	sender := new(Sender)
 	sender.outboxRepo = NewOutboxRepository(ctx.GormDBContext)
+	sender.ctx = ctx
 	return sender
 }
 
