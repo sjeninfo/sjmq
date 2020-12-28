@@ -28,7 +28,7 @@ func NewClient(
 	}
 	c.DB = db
 	c.Notifier = NewNotifier(publisherHost, dbType, dsn)
-	c.Receiver = NewReceiver(mqHost, group)
+	c.Receiver = NewReceiver(db, mqHost, group)
 	outboxRepo := NewOutboxRepository(NewGormDBContext(db))
 	if outboxRepo.HasMessage() {
 		c.Notifier.Notify()
@@ -60,6 +60,6 @@ func initialDB(dbType, dsn string) (*gorm.DB, error) {
 	if err != nil {
 		return nil, err
 	}
-	db.AutoMigrate(&Message{})
+	db.AutoMigrate(&OutMessage{}, &InMessage{})
 	return db, nil
 }

@@ -10,7 +10,7 @@ type GormDBContext struct {
 }
 
 func NewGormDBContext(db *gorm.DB) *GormDBContext {
-	return &GormDBContext{source: db}
+	return &GormDBContext{source: db, tx: nil}
 }
 
 func (g *GormDBContext) DB() *gorm.DB {
@@ -23,7 +23,8 @@ func (g *GormDBContext) DB() *gorm.DB {
 
 func (g *GormDBContext) Begin() error {
 	g.tx = g.source.Begin()
-	return nil
+	return g.tx.Error
+	//return nil
 }
 
 func (g *GormDBContext) Commit() error {
@@ -31,6 +32,8 @@ func (g *GormDBContext) Commit() error {
 	if err != nil {
 		return err
 	}
+	//db, _ := g.tx.DB()
+	//db.Close()
 	g.tx = nil
 	return nil
 }
@@ -41,6 +44,8 @@ func (g *GormDBContext) IsInTransaction() bool {
 
 func (g *GormDBContext) Rollback() {
 	g.tx.Rollback()
+	//db, _ := g.tx.DB()
+	//db.Close()
 	g.tx = nil
 }
 

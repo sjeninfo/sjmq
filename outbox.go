@@ -6,23 +6,19 @@ import (
 	"time"
 )
 
-type Message struct {
+type OutMessage struct {
 	ID        uint      `json:"id" mapstructure:"id" gorm:"primaryKey"`                        // 流水號
 	CreatedAt time.Time `json:"created_at" mapstructure:"created_at" gorm:"Column:created_at"` // 建檔日期
 	Channel   string    `json:"channel" mapstructure:"channel" gorm:"Column:channel"`          // 頻道(事件)名稱
 	Event     string    `json:"event" mapstructure:"event" gorm:"Column:event"`                // 事件內容
 }
 
-func (Message) TableName() string {
+func (OutMessage) TableName() string {
 	return "outbox"
 }
 
 type OutboxRepository struct {
 	DBContext *GormDBContext
-}
-
-func (o *OutboxRepository) SetDBContext(ctx *GormDBContext) {
-	o.DBContext = ctx
 }
 
 func NewOutboxRepository(ctx *GormDBContext) *OutboxRepository {
@@ -41,11 +37,11 @@ func (o *OutboxRepository) AddEvent(event interface{}) error {
 	if err != nil {
 		return err
 	}
-	return o.DB().Save(&Message{Channel: channel, Event: string(data)}).Error
+	return o.DB().Save(&OutMessage{Channel: channel, Event: string(data)}).Error
 }
 
 func (o *OutboxRepository) HasMessage() bool {
 	var count int64
-	o.DB().Model(&Message{}).Count(&count)
+	o.DB().Model(&OutMessage{}).Count(&count)
 	return count > 0
 }
