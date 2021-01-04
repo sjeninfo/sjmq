@@ -3,6 +3,7 @@ package sjmq
 import (
 	"context"
 	"encoding/json"
+	"github.com/pkg/errors"
 	"reflect"
 	"time"
 
@@ -32,34 +33,36 @@ func NewReceiver(db *gorm.DB, mqHost string, group string) *Receiver {
 		channelToHandler: make(map[string]reflect.Value),
 		notifyCh:         make(chan bool, 1),
 	}
-	go r.BackgroundWorker()
-	r.Notify()
+	go r.eventHandler()
 	return r
 }
 
-func (r *Receiver) Notify() {
+func (r *Receiver) notify() {
 	r.notifyCh <- true
 }
 
-func (r *Receiver) Subscribe(event interface{}, handler interface{}) {
+func (r *Receiver) SubscribeEvents(eventToHandler map[interface{}]interface{}) {
 	errorModel := func() error { return nil }
-	checker := reflect.FuncOf(
-		[]reflect.Type{reflect.TypeOf(event)},
-		[]reflect.Type{reflect.TypeOf(errorModel).Out(0)},
-		false,
-	)
-	t := reflect.TypeOf(handler)
-	if t != checker {
-		panic("event and handler input type is not matching")
-	}
+	for event, handler := range eventToHandler {
+		checker := reflect.FuncOf(
+			[]reflect.Type{reflect.TypeOf(event)},
+			[]reflect.Type{reflect.TypeOf(errorModel).Out(0)},
+			false,
+		)
+		t := reflect.TypeOf(handler)
+		if t != checker {
+			panic("event and handler input type is not matching")
+		}
 
-	channel := getChannelName(event)
-	r.channelToType[channel] = reflect.TypeOf(event)
-	r.channelToHandler[channel] = reflect.ValueOf(handler)
-	r.subscribeMqEvent(context.Background(), event)
+		channel := getChannelName(event)
+		r.channelToType[channel] = reflect.TypeOf(event)
+		r.channelToHandler[channel] = reflect.ValueOf(handler)
+		r.subscribeMqEvent(context.Background(), event)
+	}
+	r.notify()
 }
 
-func (r *Receiver) BackgroundWorker() {
+func (r *Receiver) eventHandler() {
 	enable := false
 	fn := func() {
 		for enable {
@@ -80,7 +83,11 @@ func (r *Receiver) BackgroundWorker() {
 					return
 				}
 
-				eventPtr := reflect.New(r.channelToType[message.Channel]).Interface()
+				t, ok := r.channelToType[message.Channel]
+				if !ok {
+					panic(errors.New("received an unsubscribed event"))
+				}
+				eventPtr := reflect.New(t).Interface()
 				err = json.Unmarshal([]byte(message.Event), eventPtr)
 				if err != nil {
 					panic(err) //TODO: handle error
@@ -141,7 +148,7 @@ func (r *Receiver) EventLisenter(eventCh <-chan *kubemq.EventStoreReceive, errCh
 			if err != nil {
 				panic("") //todo
 			}
-			r.Notify()
+			r.notify()
 		}
 	}
 }
