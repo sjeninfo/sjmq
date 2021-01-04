@@ -8,35 +8,43 @@ import (
 	"gorm.io/gorm"
 )
 
+type SenderFactory func() (ISender, *SenderContext)
+
+type ClientConfig struct {
+	PublisherHost string
+	DbType        string
+	Dsn           string
+	MqHost        string
+	Group         string
+}
+
 type Client struct {
-	Receiver *Receiver
-	Notifier *Notifier
-	DB       *gorm.DB
+	Receiver      *Receiver
+	Notifier      *Notifier
+	DB            *gorm.DB
+	SenderFactory SenderFactory
 }
 
 func NewClient(
-	publisherHost string,
-	dbType string,
-	dsn string,
-	mqHost string,
-	group string,
+	config ClientConfig,
 ) *Client {
 	c := new(Client)
-	db, err := initialDB(dbType, dsn)
+	db, err := initialDB(config.DbType, config.Dsn)
 	if err != nil {
 		panic(err)
 	}
 	c.DB = db
-	c.Notifier = NewNotifier(publisherHost, dbType, dsn)
-	c.Receiver = NewReceiver(db, mqHost, group)
+	c.Notifier = NewNotifier(config.PublisherHost, config.DbType, config.Dsn)
+	c.Receiver = NewReceiver(db, config.MqHost, config.Group)
 	outboxRepo := NewOutboxRepository(NewGormDBContext(db))
 	if outboxRepo.HasMessage() {
 		c.Notifier.Notify()
 	}
+	c.SenderFactory = c.newSender
 	return c
 }
 
-func (c *Client) NewSender() (ISender, *SenderContext) {
+func (c *Client) newSender() (ISender, *SenderContext) {
 	ctx := NewSenderContext(c.DB, c.Notifier.Notify)
 	s := NewSender(ctx)
 	return s, ctx

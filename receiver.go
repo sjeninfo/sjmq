@@ -95,15 +95,7 @@ func (r *Receiver) BackgroundWorker() {
 					time.Sleep(time.Second)
 					return
 				}
-				// if err != nil {
-				// 	//update times
-				// 	err := inbox.AddTimes(message)
-				// 	if err != nil {
-				// 		panic("") //todo:
-				// 	}
-				// 	time.Sleep(time.Second)
-				// 	return
-				// }
+
 				err = inbox.DeleteMessage(message)
 				if err != nil {
 					panic(err) //todo:
