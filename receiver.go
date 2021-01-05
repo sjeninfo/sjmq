@@ -12,6 +12,11 @@ import (
 	"gorm.io/gorm"
 )
 
+type EventConfig struct {
+	Event   interface{}
+	Handler interface{}
+}
+
 type Receiver struct {
 	Host      string
 	Group     string
@@ -41,9 +46,11 @@ func (r *Receiver) notify() {
 	r.notifyCh <- true
 }
 
-func (r *Receiver) SubscribeEvents(eventToHandler map[interface{}]interface{}) {
+func (r *Receiver) SubscribeEvents(eventConfigs []EventConfig) {
 	errorModel := func() error { return nil }
-	for event, handler := range eventToHandler {
+	for _, eventConfig := range eventConfigs {
+		event := eventConfig.Event
+		handler := eventConfig.Handler
 		checker := reflect.FuncOf(
 			[]reflect.Type{reflect.TypeOf(event)},
 			[]reflect.Type{reflect.TypeOf(errorModel).Out(0)},
