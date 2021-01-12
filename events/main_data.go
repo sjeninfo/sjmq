@@ -32,6 +32,21 @@ type UpdateBankAccount struct {
 	CreatedByID    *uint     `json:"created_by_id" mapstructure:"created_by_id"`       // 建檔人關聯ID
 }
 
+type UpdateBasicItem struct {
+	UpdateItem     `mapstructure:",squash"`
+	ProviderID     uint    `json:"provider_id" mapstructure:"provider_id"`         // 主供應商關聯ID
+	OnHandQty      float64 `json:"on_hand_qty" mapstructure:"on_hand_qty"`         // 現有存量
+	InitQty        float64 `json:"init_qty" mapstructure:"init_qty"`               // 期初數量
+	InitCost       float64 `json:"init_cost" mapstructure:"init_cost"`             // 期初成本
+	BasicQty       float64 `json:"basic_qty" mapstructure:"basic_qty"`             // 基本採購量
+	ShipDate       string  `json:"ship_date" mapstructure:"ship_date"`             // 出貨日期
+	PurchaseDate   string  `json:"purchase_date" mapstructure:"purchase_date"`     // 進貨日期
+	LicenseType    uint    `json:"license_type" mapstructure:"license_type"`       // 許可證類別(0.未填入 1.衛署藥製 2.衛署藥輸 3.衛署 4.內衛藥製 5.內衛藥輸 6.內衛)
+	LicenseNo      string  `json:"license_no" mapstructure:"license_no"`           // 許可證字號
+	AllowPurchase  bool    `json:"allow_purchase" mapstructure:"allow_purchase"`   // 允許進貨
+	AllowInventory bool    `json:"allow_inventory" mapstructure:"allow_inventory"` // 允許盤點
+}
+
 type UpdateCustomerCategory struct {
 	ID        uint      `json:"id" mapstructure:"id"`                 // 流水號
 	CreatedAt time.Time `json:"created_at" mapstructure:"created_at"` // 建檔日期
@@ -174,38 +189,25 @@ type UpdateItem struct {
 	CreatedAt         time.Time `json:"created_at" mapstructure:"created_at"`                   // 建檔日期
 	UpdatedAt         time.Time `json:"updated_at" mapstructure:"updated_at"`                   // 修改日期
 	No                string    `json:"no" mapstructure:"no"`                                   // 編號
-	MainCategoryID    uint      `json:"main_category_id" mapstructure:"main_category_id"`       // 大類關聯ID
-	CategoryID        uint      `json:"category_id" mapstructure:"category_id"`                 // 中類關聯ID
+	Name              string    `json:"name" mapstructure:"name"`                               // 名稱
 	SubcategoryID     uint      `json:"subcategory_id" mapstructure:"subcategory_id"`           // 小類關聯ID
 	SpecialCategoryID uint      `json:"special_category_id" mapstructure:"special_category_id"` // 特殊分類
 	TaxType           uint      `json:"tax_type" mapstructure:"tax_type"`                       // 稅別(1.應稅內含 2.應稅外加 3.零稅率 4.免稅)
-	Name              string    `json:"name" mapstructure:"name"`                               // 名稱
 	Spec              string    `json:"spec" mapstructure:"spec"`                               // 規格說明
 	QuickCode         string    `json:"quick_code" mapstructure:"quick_code"`                   // 簡碼
 	SkuNo             string    `json:"sku_no" mapstructure:"sku_no"`                           // 貨號
 	BonusID           uint      `json:"bonus_id" mapstructure:"bonus_id"`                       // 獎金別關聯ID
 	BarcodeFlag       bool      `json:"barcode_flag" mapstructure:"barcode_flag"`               // 是否印出條碼
-	ProviderID        uint      `json:"provider_id" mapstructure:"provider_id"`                 // 主供應商關聯ID
-	OnHandQty         float64   `json:"on_hand_qty" mapstructure:"on_hand_qty"`                 // 現有存量
-	InitQty           float64   `json:"init_qty" mapstructure:"init_qty"`                       // 期初數量
-	InitCost          float64   `json:"init_cost" mapstructure:"init_cost"`                     // 期初成本
 	AverageCost       float64   `json:"average_cost" mapstructure:"average_cost"`               // 平均成本
 	WholesaleCost     float64   `json:"wholesale_cost" mapstructure:"wholesale_cost"`           // 批發成本
 	UnitID            uint      `json:"unit_id" mapstructure:"unit_id"`                         // 單位關聯ID
 	PromotionID       uint      `json:"promotion_id" mapstructure:"promotion_id"`               // 促銷類別關聯ID
-	BasicQty          float64   `json:"basic_qty" mapstructure:"basic_qty"`                     // 基本採購量
-	ShipDate          string    `json:"ship_date" mapstructure:"ship_date"`                     // 出貨日期
-	PurchaseDate      string    `json:"purchase_date" mapstructure:"purchase_date"`             // 進貨日期
-	LicenseType       uint      `json:"license_type" mapstructure:"license_type"`               // 許可證類別(0.未填入 1.衛署藥製 2.衛署藥輸 3.衛署 4.內衛藥製 5.內衛藥輸 6.內衛)
-	LicenseNo         string    `json:"license_no" mapstructure:"license_no"`                   // 許可證字號
 	UpcCode1          string    `json:"upc_code1" mapstructure:"upc_code1"`                     // 國際條碼1
 	UpcCode2          string    `json:"upc_code2" mapstructure:"upc_code2"`                     // 國際條碼2
 	UpcCode3          string    `json:"upc_code3" mapstructure:"upc_code3"`                     // 國際條碼3
 	OriginID          uint      `json:"origin_id" mapstructure:"origin_id"`                     // 產地關聯ID
 	Remark            string    `json:"remark" mapstructure:"remark"`                           // 備註
-	AllowPurchase     bool      `json:"allow_purchase" mapstructure:"allow_purchase"`           // 允許進貨
 	AllowSale         bool      `json:"allow_sale" mapstructure:"allow_sale"`                   // 允許銷售
-	AllowInventory    bool      `json:"allow_inventory" mapstructure:"allow_inventory"`         // 允許盤點
 	AllowPosExchange  bool      `json:"allow_pos_exchange" mapstructure:"allow_pos_exchange"`   // 允許POS退換貨
 	AllowPromotion    bool      `json:"allow_promotion" mapstructure:"allow_promotion"`         // 允許促銷
 	SkuFlag           bool      `json:"sku_flag" mapstructure:"sku_flag"`                       // 計算SKU
@@ -218,6 +220,7 @@ type UpdateItem struct {
 	PosProperty       uint      `json:"pos_property" mapstructure:"pos_property"`               // 銷售屬性(1.正常品 2.折現金/折價券 3.不扣庫商品 4.贈品點數商品 5.代收現金3 6.代收現金4 7.5代收現金5 8.5環保折讓 9.代用條碼 10.其他)
 	DrugProperty      uint      `json:"drug_property" mapstructure:"drug_property"`             // 藥品屬性(1.非藥品 2.一般藥品 3.指示用藥 4.處方用藥)
 	Turnover          float64   `json:"turnover" mapstructure:"turnover"`                       // 周轉率
+	PackageType       uint      `json:"package_type" mapstructure:"package_type"`               // 包裝類型(1.基本商品 2.大包裝 3.組合包裝)
 	Blocked           bool      `json:"blocked" mapstructure:"blocked"`                         // 停用
 	Used              bool      `json:"used" mapstructure:"used"`                               // 使用過期標
 	UpdatedByID       *uint     `json:"updated_by_id" mapstructure:"updated_by_id"`             // 修改人關聯ID
@@ -260,6 +263,13 @@ type UpdateOrigin struct {
 	No        string    `json:"no" mapstructure:"no"`                 // 產地代號(unique)
 	Name      string    `json:"name" mapstructure:"name"`             // 產地名稱
 	QuickCode string    `json:"quick_code" mapstructure:"quick_code"` // 簡碼
+}
+
+type UpdatePackagedItem struct {
+	UpdateItem    `mapstructure:",squash"`
+	BasicItemID   uint    `json:"basic_item_id" mapstructure:"basic_item_id"`   // 基本商品關聯ID
+	Quantity      float64 `json:"quantity" mapstructure:"quantity"`             // 包裝量
+	AllowPurchase bool    `json:"allow_purchase" mapstructure:"allow_purchase"` // 允許進貨
 }
 
 type UpdatePicture struct {
@@ -387,6 +397,10 @@ type DeleteBankAccount struct {
 	ID uint `json:"id" mapstructure:"id"`
 }
 
+type DeleteBasicItem struct {
+	ID uint `json:"id" mapstructure:"id"`
+}
+
 type DeleteCustomerCategory struct {
 	ID uint `json:"id" mapstructure:"id"`
 }
@@ -419,10 +433,6 @@ type DeleteItemBonus struct {
 	ID uint `json:"id" mapstructure:"id"`
 }
 
-type DeleteItem struct {
-	ID uint `json:"id" mapstructure:"id"`
-}
-
 type DeleteItemCategory struct {
 	ID uint `json:"id" mapstructure:"id"`
 }
@@ -436,6 +446,10 @@ type DeleteItemSubcategory struct {
 }
 
 type DeleteOrigin struct {
+	ID uint `json:"id" mapstructure:"id"`
+}
+
+type DeletePackagedItem struct {
 	ID uint `json:"id" mapstructure:"id"`
 }
 
