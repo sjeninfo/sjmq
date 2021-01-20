@@ -1,6 +1,7 @@
 package events
 
 import (
+	"gorm.io/gorm"
 	"time"
 )
 
@@ -57,43 +58,54 @@ type UpdateCustomerCategory struct {
 }
 
 type UpdateCustomer struct {
-	ID              uint      `json:"id" mapstructure:"id"`                             // 流水號
-	CreatedAt       time.Time `json:"created_at" mapstructure:"created_at"`             // 建檔日期
-	UpdatedAt       time.Time `json:"updated_at" mapstructure:"updated_at"`             // 修改日期
-	No              string    `json:"no" mapstructure:"no"`                             // 客戶編號
-	InputNo         string    `json:"input_no" mapstructure:"input_no"`                 // 門市代號
-	CategoryID      uint      `json:"category_id" mapstructure:"category_id"`           // 客戶類別
-	Name            string    `json:"name" mapstructure:"name"`                         // 客戶名稱
-	UseIndex        string    `json:"use_index" mapstructure:"use_index"`               // 簡碼
-	Telephone1      string    `json:"telephone1" mapstructure:"telephone1"`             // 電話1
-	Telephone2      string    `json:"telephone2" mapstructure:"telephone2"`             // 電話2
-	Mobilphone      string    `json:"mobilphone" mapstructure:"mobilphone"`             // 行動電話
-	Fax             string    `json:"fax" mapstructure:"fax"`                           // 傳真
-	Contact         string    `json:"contact" mapstructure:"contact"`                   // 連絡人
-	Uniform         string    `json:"uniform" mapstructure:"uniform"`                   // 統一編號
-	BillingAddress  string    `json:"billing_address" mapstructure:"billing_address"`   // 帳單地址
-	ZipCode         string    `json:"zip_code" mapstructure:"zip_code"`                 // 郵遞區號
-	Email           string    `json:"email" mapstructure:"email"`                       // 電子郵件
-	PostFlag        bool      `json:"post_flag" mapstructure:"post_flag"`               // 郵寄標籤
-	TransactionDate string    `json:"transaction_date" mapstructure:"transaction_date"` // 最近交易日期
-	AreaID          uint      `json:"area_id" mapstructure:"area_id"`                   // 區域別關聯ID
-	DiscountID      uint      `json:"discount_id" mapstructure:"discount_id"`           // 折扣別關聯ID
-	Remark2         string    `json:"remark2" mapstructure:"remark2"`                   // 重要資訊
-	Remark          string    `json:"remark" mapstructure:"remark"`                     // 備 註
-	InvoiceTitle    string    `json:"invoice_title" mapstructure:"invoice_title"`       // 發票抬頭
-	InvoiceAddress  string    `json:"invoice_address" mapstructure:"invoice_address"`   // 發票地址
-	DeliveryAddress string    `json:"delivery_address" mapstructure:"delivery_address"` // 送貨地址
-	DeliveryID      uint      `json:"delivery_id" mapstructure:"delivery_id"`           // 配送類別
-	MonthlyClose    string    `json:"monthly_close" mapstructure:"monthly_close"`       // 每月結帳日(每月歸帳日)
-	MonthlyRequest  string    `json:"monthly_request" mapstructure:"monthly_request"`   // 每月請款日(會計請款日)
-	OpeningAmount   float64   `json:"opening_amount" mapstructure:"opening_amount"`     // 期初金額
-	CreditLine      float64   `json:"credit_line" mapstructure:"credit_line"`           // 授信額度
-	DeliveryRoute   string    `json:"delivery_route" mapstructure:"delivery_route"`     // 配送路線
-	Url             string    `json:"url" mapstructure:"url"`                           // 網 址
-	License         string    `json:"license" mapstructure:"license"`                   // 登記證號
-	Used            bool      `json:"used" mapstructure:"used"`                         // 使用過期標
-	UpdatedByID     *uint     `json:"updated_by_id" mapstructure:"updated_by_id"`       // 修改人關聯ID
-	CreatedByID     *uint     `json:"created_by_id" mapstructure:"created_by_id"`       // 建檔人關聯ID
+	ID                  uint           `json:"id" mapstructure:"id"`                                       // 流水號
+	CreatedAt           time.Time      `json:"created_at" mapstructure:"created_at"`                       // 建檔日期
+	UpdatedAt           time.Time      `json:"updated_at" mapstructure:"updated_at"`                       // 修改日期
+	DeletedAt           gorm.DeletedAt `json:"-" mapstructure:"deleted_at"`                                // 使用旗標
+	No                  string         `json:"no" mapstructure:"no"`                                       // 客戶編號
+	Name                string         `json:"name" mapstructure:"name"`                                   // 客戶名稱
+	CategoryID          uint           `json:"category_id" mapstructure:"category_id"`                     // 客戶類別關聯ID
+	QuickCode           string         `json:"quick_code" mapstructure:"quick_code"`                       // 簡碼
+	PhoneNo1            string         `json:"phone_no1" mapstructure:"phone_no1"`                         // 電話1
+	PhoneNo2            string         `json:"phone_no2" mapstructure:"phone_no2"`                         // 電話2
+	Mobilphone          string         `json:"mobilphone" mapstructure:"mobilphone"`                       // 行動電話
+	Fax                 string         `json:"fax" mapstructure:"fax"`                                     // 傳真
+	Contact             string         `json:"contact" mapstructure:"contact"`                             // 連絡人
+	Uniform             string         `json:"uniform" mapstructure:"uniform"`                             // 統一編號
+	TaxIdentificationNo string         `json:"tax_identification_no" mapstructure:"tax_identification_no"` // 稅籍編號
+	BillingAddress      string         `json:"billing_address" mapstructure:"billing_address"`             // 帳單地址
+	Email               string         `json:"email" mapstructure:"email"`                                 // 電子郵件
+	ZipCode             string         `json:"zip_code" mapstructure:"zip_code"`                           // 郵遞區號(聯絡地址)
+	ZipCode2            string         `json:"zip_code2" mapstructure:"zip_code2"`                         // 郵遞區號(發票地址)
+	ZipCode3            string         `json:"zip_code3" mapstructure:"zip_code3"`                         // 郵遞區號(送貨地址)
+	PostFlag            bool           `json:"post_flag" mapstructure:"post_flag"`                         // 郵寄旗標
+	TransactionDate     string         `json:"transaction_date" mapstructure:"transaction_date"`           // 最近交易日
+	AreaID              uint           `json:"area_id" mapstructure:"area_id"`                             // 區域別關聯ID
+	DiscountID          uint           `json:"discount_id" mapstructure:"discount_id"`                     // 折扣別關聯ID
+	Hint                string         `json:"hint" mapstructure:"hint"`                                   // 重要資訊
+	Remark              string         `json:"remark" mapstructure:"remark"`                               // 備註
+	InvoiceType         uint           `json:"invoice_type" mapstructure:"invoice_type"`                   // 開立發票方式
+	InvoiceTitle        string         `json:"invoice_title" mapstructure:"invoice_title"`                 // 發票抬頭
+	InvoiceAddress      string         `json:"invoice_address" mapstructure:"invoice_address"`             // 發票地址
+	DeliveryAddress     string         `json:"delivery_address" mapstructure:"delivery_address"`           // 送貨地址
+	DeliveryID          uint           `json:"delivery_id" mapstructure:"delivery_id"`                     // 配送類別關聯ID
+	Remitter            string         `json:"remitter" mapstructure:"remitter"`                           // 匯款人
+	WireAccount         string         `json:"wire_account" mapstructure:"wire_account"`                   // 匯款帳號
+	BankAccountID       uint           `json:"bank_account_id" mapstructure:"bank_account_id"`             // 付款銀行關聯ID
+	PaymentTerms        string         `json:"payment_terms" mapstructure:"payment_terms"`                 // 付款條件
+	SalesmanID          *uint          `json:"salesman_id" mapstructure:"salesman_id"`                     // 業務員關聯ID
+	AttendantID         *uint          `json:"attendant_id" mapstructure:"attendant_id"`                   // 服務員關聯ID
+	MonthlyClose        string         `json:"monthly_close" mapstructure:"monthly_close"`                 // 每月結帳日
+	MonthlyRequest      string         `json:"monthly_request" mapstructure:"monthly_request"`             // 每月請款日
+	Prepayment          float64        `json:"prepayment" mapstructure:"prepayment"`                       // 預收金額
+	OpeningAmount       float64        `json:"opening_amount" mapstructure:"opening_amount"`               // 期初金額
+	CreditLine          float64        `json:"credit_line" mapstructure:"credit_line"`                     // 授信額度
+	Website             string         `json:"website" mapstructure:"website"`                             // 網址
+	MedicalNo           string         `json:"medical_no" mapstructure:"medical_no"`                       // 健保藥局代號
+	License             string         `json:"license" mapstructure:"license"`                             // 登記證號
+	Used                bool           `json:"used" mapstructure:"used"`                                   // 使用過期標
+	UpdatedByID         *uint          `json:"updated_by_id" mapstructure:"updated_by_id"`                 // 修改人關聯ID
+	CreatedByID         *uint          `json:"created_by_id" mapstructure:"created_by_id"`                 // 建檔人關聯ID
 }
 
 type UpdateDelivery struct {
