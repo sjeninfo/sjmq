@@ -383,15 +383,6 @@ type UpdateStoreItem struct {
 	ItemID    uint
 }
 
-type UpdateStore struct {
-	ID        uint      `json:"id" mapstructure:"id"`                 // 流水號
-	CreatedAt time.Time `json:"created_at" mapstructure:"created_at"` // 建檔日期
-	UpdatedAt time.Time `json:"updated_at" mapstructure:"updated_at"` // 修改日期
-	No        string    `json:"no" mapstructure:"no"`                 // 門市代號(unique)
-	Name      string    `json:"name" mapstructure:"name"`             // 門市名稱
-	QuickCode string    `json:"quick_code" mapstructure:"quick_code"` // 簡碼
-}
-
 type UpdateUnit struct {
 	ID        uint      `json:"id" mapstructure:"id"`                 // 流水號
 	CreatedAt time.Time `json:"created_at" mapstructure:"created_at"` // 建檔日期
