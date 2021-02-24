@@ -423,6 +423,20 @@ type StoreUpdated struct {
 	CreatedByID       *uint     `json:"created_by_id" mapstructure:"created_by_id" gorm:"Column:created_by_id"`                   // 建檔人關聯ID
 }
 
+type WarehouseUpdated struct {
+	ID          uint      `json:"id" mapstructure:"id" gorm:"primaryKey"`                                       // 流水號
+	CreatedAt   time.Time `json:"created_at" mapstructure:"created_at" gorm:"Column:created_at"`                // 建檔日期
+	UpdatedAt   time.Time `json:"updated_at" mapstructure:"updated_at" gorm:"Column:updated_at"`                // 修改日期
+	No          string    `json:"no" mapstructure:"no" gorm:"Column:no;index:,unique,where:deleted_at IS NULL"` // 區域代號(unique)
+	Name        string    `json:"name" mapstructure:"name" gorm:"Column:name"`                                  // 區域名稱
+	StoreID     uint      `json:"store_id" mapstructure:"store_id" gorm:"Column:store_id"`                      // 職位關聯ID
+	QuickCode   string    `json:"quick_code" mapstructure:"quick_code" gorm:"Column:quick_code"`                // 簡碼
+	Remark      string    `json:"remark" mapstructure:"remark" gorm:"Column:remark"`                            // 備註
+	Blocked     bool      `json:"blocked" mapstructure:"blocked" gorm:"Column:blocked"`                         // 停用
+	UpdatedByID *uint     `json:"updated_by_id" mapstructure:"updated_by_id" gorm:"Column:updated_by_id"`       // 修改人關聯ID
+	CreatedByID *uint     `json:"created_by_id" mapstructure:"created_by_id" gorm:"Column:created_by_id"`       // 建檔人關聯ID
+}
+
 type DeleteArea struct {
 	ID uint `json:"id" mapstructure:"id"`
 }
