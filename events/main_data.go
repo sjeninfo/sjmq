@@ -114,7 +114,7 @@ type UpdateCustomer struct {
 	QuickCode           string         `json:"quick_code" mapstructure:"quick_code"`                       // 簡碼
 	PhoneNo1            string         `json:"phone_no1" mapstructure:"phone_no1"`                         // 電話1
 	PhoneNo2            string         `json:"phone_no2" mapstructure:"phone_no2"`                         // 電話2
-	Mobilphone          string         `json:"mobilphone" mapstructure:"mobilphone"`                       // 行動電話
+	MobilePhone         string         `json:"mobile_phone" mapstructure:"mobile_phone"`                   // 行動電話
 	Fax                 string         `json:"fax" mapstructure:"fax"`                                     // 傳真
 	Contact             string         `json:"contact" mapstructure:"contact"`                             // 連絡人
 	Uniform             string         `json:"uniform" mapstructure:"uniform"`                             // 統一編號
@@ -208,7 +208,7 @@ type UpdateEmployee struct {
 	ResidentAddress  string    `json:"resident_address" mapstructure:"resident_address"`     // 戶籍地址
 	ContactNo        string    `json:"contact_no" mapstructure:"contact_no"`                 // 連絡電話
 	PermanentPhoneNo string    `json:"permanent_phone_no" mapstructure:"permanent_phone_no"` // 戶籍電話
-	Mobilphone       string    `json:"mobilphone" mapstructure:"mobilphone"`                 // 行動電話
+	MobilePhone      string    `json:"mobile_phone" mapstructure:"mobile_phone"`             // 行動電話
 	Email            string    `json:"email" mapstructure:"email"`                           // 電子郵件
 	Remark           string    `json:"remark" mapstructure:"remark"`                         // 備註
 	BonusID          uint      `json:"bonus_id" mapstructure:"bonus_id"`                     // 獎金別關聯ID
@@ -401,7 +401,7 @@ type UpdateProvider struct {
 	Contact         string    `json:"contact" mapstructure:"contact"`                   // 聯絡人
 	PhoneNo1        string    `json:"phone_no1" mapstructure:"phone_no1"`               // 電話1
 	PhoneNo2        string    `json:"phone_no2" mapstructure:"phone_no2"`               // 電話2
-	Mobilphone      string    `json:"mobilphone" mapstructure:"mobilphone"`             // 行動電話
+	MobilePhone     string    `json:"mobile_phone" mapstructure:"mobile_phone"`         // 行動電話
 	Fax             string    `json:"fax" mapstructure:"fax"`                           // 傳真
 	Email           string    `json:"email" mapstructure:"email"`                       // 電子郵件
 	Website         string    `json:"website" mapstructure:"website"`                   // 公司網址
