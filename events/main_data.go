@@ -48,6 +48,52 @@ type UpdateBasicItem struct {
 	AllowInventory bool    `json:"allow_inventory" mapstructure:"allow_inventory"` // 允許盤點
 }
 
+type ContactDeleted struct {
+	ID uint `json:"id" mapstructure:"id"`
+}
+
+type ContactUpdated struct {
+	ID              uint      `json:"id" mapstructure:"id"`                             // 流水號
+	CreatedAt       time.Time `json:"created_at" mapstructure:"created_at"`             // 建檔日期
+	UpdatedAt       time.Time `json:"updated_at" mapstructure:"updated_at"`             // 修改日期
+	No              string    `json:"no" mapstructure:"no"`                             // 通訊錄編號
+	Name            string    `json:"name" mapstructure:"name"`                         // 通訊錄名稱
+	CategoryID      uint      `json:"category_id" mapstructure:"category_id"`           // 通訊錄類別關聯ID
+	QuickCode       string    `json:"quick_code" mapstructure:"quick_code"`             // 簡碼
+	PhoneNo1        string    `json:"phone_no1" mapstructure:"phone_no1"`               // 電話1
+	PhoneNo2        string    `json:"phone_no2" mapstructure:"phone_no2"`               // 電話2
+	MobilePhone     string    `json:"mobile_phone" mapstructure:"mobile_phone"`         // 行動電話
+	Fax             string    `json:"fax" mapstructure:"fax"`                           // 傳真
+	Contact         string    `json:"contact" mapstructure:"contact"`                   // 連絡人
+	Uniform         string    `json:"uniform" mapstructure:"uniform"`                   // 統一編號
+	BillingAddress  string    `json:"billing_address" mapstructure:"billing_address"`   // 帳單地址
+	Email           string    `json:"email" mapstructure:"email"`                       // 電子郵件
+	ZipCode         string    `json:"zip_code" mapstructure:"zip_code"`                 // 郵遞區號(聯絡地址)
+	ZipCode2        string    `json:"zip_code2" mapstructure:"zip_code2"`               // 郵遞區號(發票地址)
+	ZipCode3        string    `json:"zip_code3" mapstructure:"zip_code3"`               // 郵遞區號(送貨地址)
+	Hint            string    `json:"hint" mapstructure:"hint"`                         // 重要資訊
+	Remark          string    `json:"remark" mapstructure:"remark"`                     // 備註
+	InvoiceTitle    string    `json:"invoice_title" mapstructure:"invoice_title"`       // 發票抬頭
+	InvoiceAddress  string    `json:"invoice_address" mapstructure:"invoice_address"`   // 發票地址
+	DeliveryAddress string    `json:"delivery_address" mapstructure:"delivery_address"` // 送貨地址
+	Website         string    `json:"website" mapstructure:"website"`                   // 網址
+	UpdatedByID     *uint     `json:"updated_by_id" mapstructure:"updated_by_id"`       // 修改人關聯ID
+	CreatedByID     *uint     `json:"created_by_id" mapstructure:"created_by_id"`       // 建檔人關聯ID
+}
+
+type ContactCategoryDeleted struct {
+	ID uint `json:"id" mapstructure:"id"`
+}
+
+type ContactCategoryUpdated struct {
+	ID        uint      `json:"id" mapstructure:"id"`                 // 流水號
+	CreatedAt time.Time `json:"created_at" mapstructure:"created_at"` // 建檔日期
+	UpdatedAt time.Time `json:"updated_at" mapstructure:"updated_at"` // 修改日期
+	No        string    `json:"no" mapstructure:"no"`                 // 通訊錄類別代號(unique)
+	Name      string    `json:"name" mapstructure:"name"`             // 通訊錄類別名稱
+	QuickCode string    `json:"quick_code" mapstructure:"quick_code"` // 簡碼
+}
+
 type UpdateCustomerCategory struct {
 	ID        uint      `json:"id" mapstructure:"id"`                 // 流水號
 	CreatedAt time.Time `json:"created_at" mapstructure:"created_at"` // 建檔日期
@@ -393,48 +439,48 @@ type UpdateUnit struct {
 }
 
 type StoreUpdated struct {
-	ID                uint      `json:"id" mapstructure:"id" gorm:"primaryKey"`                                                   // 流水號
-	CreatedAt         time.Time `json:"created_at" mapstructure:"created_at" gorm:"Column:created_at"`                            // 建檔日期
-	UpdatedAt         time.Time `json:"updated_at" mapstructure:"updated_at" gorm:"Column:updated_at"`                            // 修改日期
-	No                string    `json:"no" mapstructure:"no" gorm:"Column:no"`                                                    // 門市代號
-	Name              string    `json:"name" mapstructure:"name" gorm:"Column:name"`                                              // 門市名稱
-	QuickCode         string    `json:"quick_code" mapstructure:"quick_code" gorm:"Column:quick_code"`                            // 簡碼
-	AreaID            uint      `json:"area_id" mapstructure:"area_id" gorm:"Column:area_id"`                                     // 區域別id
-	StoreType         uint      `json:"store_type" mapstructure:"store_type" gorm:"Column:store_type"`                            // 店系類別
-	Uniform           string    `json:"uniform" mapstructure:"uniform" gorm:"Column:uniform"`                                     // 統一編號
-	InvoiceTitle      string    `json:"invoice_title" mapstructure:"invoice_title" gorm:"Column:invoice_title"`                   // 發票抬頭
-	Contact           string    `json:"contact" mapstructure:"contact" gorm:"Column:contact"`                                     // 聯絡人
-	IdentityNo        string    `json:"identity_no" mapstructure:"identity_no" gorm:"Column:identity_no"`                         // 身分證
-	PhoneNo1          string    `json:"phone_no1" mapstructure:"phone_no1" gorm:"Column:phone_no1"`                               // 電話1
-	PhoneNo2          string    `json:"phone_no2" mapstructure:"phone_no2" gorm:"Column:phone_no2"`                               // 電話2
-	Fax               string    `json:"fax" mapstructure:"fax" gorm:"Column:fax"`                                                 // 傳真
-	BillingAddress    string    `json:"billing_address" mapstructure:"billing_address" gorm:"Column:billing_address"`             // 帳單地址
-	InvoiceAddress    string    `json:"invoice_address" mapstructure:"invoice_address" gorm:"Column:invoice_address"`             // 公司發票地址
-	DeliveryAddress   string    `json:"delivery_address" mapstructure:"delivery_address" gorm:"Column:delivery_address"`          // 送貨地址
-	BillingZipCode    string    `json:"billing_zip_code" mapstructure:"billing_zip_code" gorm:"Column:billing_zip_code"`          // 郵遞區號(帳單地址)
-	InvoiceZipCode    string    `json:"invoice_zip_code" mapstructure:"invoice_zip_code" gorm:"Column:invoice_zip_code"`          // 郵遞區號(公司發票地址)
-	DeliveryZipCode   string    `json:"delivery_zip_code" mapstructure:"delivery_zip_code" gorm:"Column:delivery_zip_code"`       // 郵遞區號(送貨地址)
-	Email             string    `json:"email" mapstructure:"email" gorm:"Column:email"`                                           // 電子郵件
-	BusinessStartDate string    `json:"business_start_date" mapstructure:"business_start_date" gorm:"Column:business_start_date"` // 開始營業日
-	BusinessEndDate   string    `json:"business_end_date" mapstructure:"business_end_date" gorm:"Column:business_end_date"`       // 結束營業日
-	Remark            string    `json:"remark" mapstructure:"remark" gorm:"Column:remark"`                                        // 備註
-	Blocked           bool      `json:"blocked" mapstructure:"blocked" gorm:"Column:blocked"`                                     // 停用
-	UpdatedByID       *uint     `json:"updated_by_id" mapstructure:"updated_by_id" gorm:"Column:updated_by_id"`                   // 修改人關聯ID
-	CreatedByID       *uint     `json:"created_by_id" mapstructure:"created_by_id" gorm:"Column:created_by_id"`                   // 建檔人關聯ID
+	ID                uint      `json:"id" mapstructure:"id"`                                   // 流水號
+	CreatedAt         time.Time `json:"created_at" mapstructure:"created_at"`                   // 建檔日期
+	UpdatedAt         time.Time `json:"updated_at" mapstructure:"updated_at"`                   // 修改日期
+	No                string    `json:"no" mapstructure:"no"`                                   // 門市代號
+	Name              string    `json:"name" mapstructure:"name"`                               // 門市名稱
+	QuickCode         string    `json:"quick_code" mapstructure:"quick_code"`                   // 簡碼
+	AreaID            uint      `json:"area_id" mapstructure:"area_id"`                         // 區域別id
+	StoreType         uint      `json:"store_type" mapstructure:"store_type"`                   // 店系類別
+	Uniform           string    `json:"uniform" mapstructure:"uniform"`                         // 統一編號
+	InvoiceTitle      string    `json:"invoice_title" mapstructure:"invoice_title"`             // 發票抬頭
+	Contact           string    `json:"contact" mapstructure:"contact"`                         // 聯絡人
+	IdentityNo        string    `json:"identity_no" mapstructure:"identity_no"`                 // 身分證
+	PhoneNo1          string    `json:"phone_no1" mapstructure:"phone_no1"`                     // 電話1
+	PhoneNo2          string    `json:"phone_no2" mapstructure:"phone_no2"`                     // 電話2
+	Fax               string    `json:"fax" mapstructure:"fax"`                                 // 傳真
+	BillingAddress    string    `json:"billing_address" mapstructure:"billing_address"`         // 帳單地址
+	InvoiceAddress    string    `json:"invoice_address" mapstructure:"invoice_address"`         // 公司發票地址
+	DeliveryAddress   string    `json:"delivery_address" mapstructure:"delivery_address"`       // 送貨地址
+	BillingZipCode    string    `json:"billing_zip_code" mapstructure:"billing_zip_code"`       // 郵遞區號(帳單地址)
+	InvoiceZipCode    string    `json:"invoice_zip_code" mapstructure:"invoice_zip_code"`       // 郵遞區號(公司發票地址)
+	DeliveryZipCode   string    `json:"delivery_zip_code" mapstructure:"delivery_zip_code"`     // 郵遞區號(送貨地址)
+	Email             string    `json:"email" mapstructure:"email"`                             // 電子郵件
+	BusinessStartDate string    `json:"business_start_date" mapstructure:"business_start_date"` // 開始營業日
+	BusinessEndDate   string    `json:"business_end_date" mapstructure:"business_end_date"`     // 結束營業日
+	Remark            string    `json:"remark" mapstructure:"remark"`                           // 備註
+	Blocked           bool      `json:"blocked" mapstructure:"blocked"`                         // 停用
+	UpdatedByID       *uint     `json:"updated_by_id" mapstructure:"updated_by_id"`             // 修改人關聯ID
+	CreatedByID       *uint     `json:"created_by_id" mapstructure:"created_by_id"`             // 建檔人關聯ID
 }
 
 type WarehouseUpdated struct {
-	ID          uint      `json:"id" mapstructure:"id" gorm:"primaryKey"`                                       // 流水號
-	CreatedAt   time.Time `json:"created_at" mapstructure:"created_at" gorm:"Column:created_at"`                // 建檔日期
-	UpdatedAt   time.Time `json:"updated_at" mapstructure:"updated_at" gorm:"Column:updated_at"`                // 修改日期
-	No          string    `json:"no" mapstructure:"no" gorm:"Column:no;index:,unique,where:deleted_at IS NULL"` // 區域代號(unique)
-	Name        string    `json:"name" mapstructure:"name" gorm:"Column:name"`                                  // 區域名稱
-	StoreID     uint      `json:"store_id" mapstructure:"store_id" gorm:"Column:store_id"`                      // 職位關聯ID
-	QuickCode   string    `json:"quick_code" mapstructure:"quick_code" gorm:"Column:quick_code"`                // 簡碼
-	Remark      string    `json:"remark" mapstructure:"remark" gorm:"Column:remark"`                            // 備註
-	Blocked     bool      `json:"blocked" mapstructure:"blocked" gorm:"Column:blocked"`                         // 停用
-	UpdatedByID *uint     `json:"updated_by_id" mapstructure:"updated_by_id" gorm:"Column:updated_by_id"`       // 修改人關聯ID
-	CreatedByID *uint     `json:"created_by_id" mapstructure:"created_by_id" gorm:"Column:created_by_id"`       // 建檔人關聯ID
+	ID          uint      `json:"id" mapstructure:"id"`                       // 流水號
+	CreatedAt   time.Time `json:"created_at" mapstructure:"created_at"`       // 建檔日期
+	UpdatedAt   time.Time `json:"updated_at" mapstructure:"updated_at"`       // 修改日期
+	No          string    `json:"no" mapstructure:"no"`                       // 區域代號(unique)
+	Name        string    `json:"name" mapstructure:"name"`                   // 區域名稱
+	StoreID     uint      `json:"store_id" mapstructure:"store_id"`           // 職位關聯ID
+	QuickCode   string    `json:"quick_code" mapstructure:"quick_code"`       // 簡碼
+	Remark      string    `json:"remark" mapstructure:"remark"`               // 備註
+	Blocked     bool      `json:"blocked" mapstructure:"blocked"`             // 停用
+	UpdatedByID *uint     `json:"updated_by_id" mapstructure:"updated_by_id"` // 修改人關聯ID
+	CreatedByID *uint     `json:"created_by_id" mapstructure:"created_by_id"` // 建檔人關聯ID
 }
 
 type DeleteArea struct {
