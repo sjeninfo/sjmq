@@ -63,7 +63,7 @@ func (n *Notifier) notifyHandler() {
 
 func (n *Notifier) notifyPublisher() error {
 	resp, err := http.Post(
-		fmt.Sprintf("%s/notify", n.PublisherHost),
+		fmt.Sprintf("http://%s/notify", n.PublisherHost),
 		"application/json",
 		bytes.NewBuffer(n.Notification),
 	)
