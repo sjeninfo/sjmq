@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"time"
 
@@ -39,6 +40,7 @@ func (n *Notifier) notifyHandler() {
 		for enable {
 			err := n.notifyPublisher()
 			if err != nil {
+				log.Println(err)
 				time.Sleep(waitTime)
 				if waitTime < 10*time.Second {
 					waitTime *= 10
