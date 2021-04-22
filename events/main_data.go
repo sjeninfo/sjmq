@@ -1,7 +1,6 @@
 package events
 
 import (
-	"gorm.io/gorm"
 	"time"
 )
 
@@ -123,54 +122,53 @@ type CustomerDeleted struct {
 }
 
 type CustomerUpdated struct {
-	ID                  uint           `json:"id"`                    // 流水號
-	CreatedAt           time.Time      `json:"created_at"`            // 建檔日期
-	UpdatedAt           time.Time      `json:"updated_at"`            // 修改日期
-	DeletedAt           gorm.DeletedAt `json:"-"`                     // 使用旗標
-	No                  string         `json:"no"`                    // 客戶編號
-	Name                string         `json:"name"`                  // 客戶名稱
-	CategoryID          uint           `json:"category_id"`           // 客戶類別關聯ID
-	QuickCode           string         `json:"quick_code"`            // 簡碼
-	PhoneNo1            string         `json:"phone_no1"`             // 電話1
-	PhoneNo2            string         `json:"phone_no2"`             // 電話2
-	MobilePhone         string         `json:"mobile_phone"`          // 行動電話
-	Fax                 string         `json:"fax"`                   // 傳真
-	Contact             string         `json:"contact"`               // 連絡人
-	Uniform             string         `json:"uniform"`               // 統一編號
-	TaxIdentificationNo string         `json:"tax_identification_no"` // 稅籍編號
-	BillingAddress      string         `json:"billing_address"`       // 帳單地址
-	Email               string         `json:"email"`                 // 電子郵件
-	ZipCode             string         `json:"zip_code"`              // 郵遞區號(聯絡地址)
-	ZipCode2            string         `json:"zip_code2"`             // 郵遞區號(發票地址)
-	ZipCode3            string         `json:"zip_code3"`             // 郵遞區號(送貨地址)
-	PostFlag            bool           `json:"post_flag"`             // 郵寄旗標
-	TransactionDate     string         `json:"transaction_date"`      // 最近交易日
-	AreaID              uint           `json:"area_id"`               // 區域別關聯ID
-	DiscountID          uint           `json:"discount_id"`           // 折扣別關聯ID
-	Hint                string         `json:"hint"`                  // 重要資訊
-	Remark              string         `json:"remark"`                // 備註
-	InvoiceType         uint           `json:"invoice_type"`          // 開立發票方式
-	InvoiceTitle        string         `json:"invoice_title"`         // 發票抬頭
-	InvoiceAddress      string         `json:"invoice_address"`       // 發票地址
-	DeliveryAddress     string         `json:"delivery_address"`      // 送貨地址
-	DeliveryID          uint           `json:"delivery_id"`           // 配送類別關聯ID
-	Remitter            string         `json:"remitter"`              // 匯款人
-	WireAccount         string         `json:"wire_account"`          // 匯款帳號
-	BankAccountID       uint           `json:"bank_account_id"`       // 付款銀行關聯ID
-	PaymentTerms        string         `json:"payment_terms"`         // 付款條件
-	SalesmanID          *uint          `json:"salesman_id"`           // 業務員關聯ID
-	AttendantID         *uint          `json:"attendant_id"`          // 服務員關聯ID
-	MonthlyClose        string         `json:"monthly_close"`         // 每月結帳日
-	MonthlyRequest      string         `json:"monthly_request"`       // 每月請款日
-	Prepayment          float64        `json:"prepayment"`            // 預收金額
-	OpeningAmount       float64        `json:"opening_amount"`        // 期初金額
-	CreditLine          float64        `json:"credit_line"`           // 授信額度
-	Website             string         `json:"website"`               // 網址
-	MedicalNo           string         `json:"medical_no"`            // 健保藥局代號
-	License             string         `json:"license"`               // 登記證號
-	Used                bool           `json:"used"`                  // 使用過期標
-	UpdatedByID         *uint          `json:"updated_by_id"`         // 修改人關聯ID
-	CreatedByID         *uint          `json:"created_by_id"`         // 建檔人關聯ID
+	ID                  uint      `json:"id"`                    // 流水號
+	CreatedAt           time.Time `json:"created_at"`            // 建檔日期
+	UpdatedAt           time.Time `json:"updated_at"`            // 修改日期
+	No                  string    `json:"no"`                    // 客戶編號
+	Name                string    `json:"name"`                  // 客戶名稱
+	CategoryID          uint      `json:"category_id"`           // 客戶類別關聯ID
+	QuickCode           string    `json:"quick_code"`            // 簡碼
+	PhoneNo1            string    `json:"phone_no1"`             // 電話1
+	PhoneNo2            string    `json:"phone_no2"`             // 電話2
+	MobilePhone         string    `json:"mobile_phone"`          // 行動電話
+	Fax                 string    `json:"fax"`                   // 傳真
+	Contact             string    `json:"contact"`               // 連絡人
+	Uniform             string    `json:"uniform"`               // 統一編號
+	TaxIdentificationNo string    `json:"tax_identification_no"` // 稅籍編號
+	BillingAddress      string    `json:"billing_address"`       // 帳單地址
+	Email               string    `json:"email"`                 // 電子郵件
+	ZipCode             string    `json:"zip_code"`              // 郵遞區號(聯絡地址)
+	ZipCode2            string    `json:"zip_code2"`             // 郵遞區號(發票地址)
+	ZipCode3            string    `json:"zip_code3"`             // 郵遞區號(送貨地址)
+	PostFlag            bool      `json:"post_flag"`             // 郵寄旗標
+	TransactionDate     string    `json:"transaction_date"`      // 最近交易日
+	AreaID              uint      `json:"area_id"`               // 區域別關聯ID
+	DiscountID          uint      `json:"discount_id"`           // 折扣別關聯ID
+	Hint                string    `json:"hint"`                  // 重要資訊
+	Remark              string    `json:"remark"`                // 備註
+	InvoiceType         uint      `json:"invoice_type"`          // 開立發票方式
+	InvoiceTitle        string    `json:"invoice_title"`         // 發票抬頭
+	InvoiceAddress      string    `json:"invoice_address"`       // 發票地址
+	DeliveryAddress     string    `json:"delivery_address"`      // 送貨地址
+	DeliveryID          uint      `json:"delivery_id"`           // 配送類別關聯ID
+	Remitter            string    `json:"remitter"`              // 匯款人
+	WireAccount         string    `json:"wire_account"`          // 匯款帳號
+	BankAccountID       uint      `json:"bank_account_id"`       // 付款銀行關聯ID
+	PaymentTerms        string    `json:"payment_terms"`         // 付款條件
+	SalesmanID          *uint     `json:"salesman_id"`           // 業務員關聯ID
+	AttendantID         *uint     `json:"attendant_id"`          // 服務員關聯ID
+	MonthlyClose        string    `json:"monthly_close"`         // 每月結帳日
+	MonthlyRequest      string    `json:"monthly_request"`       // 每月請款日
+	Prepayment          float64   `json:"prepayment"`            // 預收金額
+	OpeningAmount       float64   `json:"opening_amount"`        // 期初金額
+	CreditLine          float64   `json:"credit_line"`           // 授信額度
+	Website             string    `json:"website"`               // 網址
+	MedicalNo           string    `json:"medical_no"`            // 健保藥局代號
+	License             string    `json:"license"`               // 登記證號
+	Used                bool      `json:"used"`                  // 使用過期標
+	UpdatedByID         *uint     `json:"updated_by_id"`         // 修改人關聯ID
+	CreatedByID         *uint     `json:"created_by_id"`         // 建檔人關聯ID
 }
 
 type DeliveryDeleted struct {
