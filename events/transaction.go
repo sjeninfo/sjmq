@@ -24,19 +24,20 @@ type OrderUpdated struct {
 }
 
 type OrderDetail struct {
-	ID            uint         `json:"id"`             // 流水號
-	ItemID        uint         `json:"item_id"`        // 商品關聯ID
-	ItemDetails   []ItemDetail `json:"item_details"`   // 商品明細
-	Quantity      float64      `json:"quantity"`       // 數量
-	Giveaway      float64      `json:"giveaway"`       // 贈量
-	Price         float64      `json:"price"`          // 單價
-	Discount      float64      `json:"discount"`       // 折讓
-	Sum           float64      `json:"sum"`            // 稅前合計(Sum + Tax - Discount)
-	Total         float64      `json:"total"`          // 稅後總計
-	TaxType       uint         `json:"tax_type"`       // 稅別
-	Tax           float64      `json:"tax"`            // 稅額
-	Remark        string       `json:"remark"`         // 備註
-	OrderPriority uint         `json:"order_priority"` // 排序編號
+	ID            uint    `json:"id"`             // 流水號
+	ItemID        uint    `json:"item_id"`        // 商品關聯ID
+	Quantity      float64 `json:"quantity"`       // 數量
+	Giveaway      float64 `json:"giveaway"`       // 贈量
+	Price         float64 `json:"price"`          // 單價
+	Discount      float64 `json:"discount"`       // 折讓
+	Sum           float64 `json:"sum"`            // 稅前合計(Sum + Tax - Discount)
+	Total         float64 `json:"total"`          // 稅後總計
+	TaxType       uint    `json:"tax_type"`       // 稅別
+	Tax           float64 `json:"tax"`            // 稅額
+	Remark        string  `json:"remark"`         // 備註
+	OrderPriority uint    `json:"order_priority"` // 排序編號
+	BasicItemID   uint    `json:"basic_item_id"`  // 過賬商品
+	PostingQty    float64 `json:"posting_qty"`    // 過賬數量
 }
 
 type PurchaseUpdated struct {
@@ -64,21 +65,22 @@ type PurchaseUpdated struct {
 }
 
 type PurchaseDetail struct {
-	ID            uint         `json:"id"`             // 流水號
-	ItemID        uint         `json:"item_id"`        // 商品關聯ID
-	ItemDetails   []ItemDetail `json:"item_details"`   // 商品明細
-	Quantity      float64      `json:"quantity"`       // 數量
-	Giveaway      float64      `json:"giveaway"`       // 贈量
-	Price         float64      `json:"price"`          // 單價
-	Discount      float64      `json:"discount"`       // 折讓
-	Sum           float64      `json:"sum"`            // 稅前合計(Sum + Tax - Discount)
-	Total         float64      `json:"total"`          // 稅後總計
-	TaxType       uint         `json:"tax_type"`       // 稅別
-	Tax           float64      `json:"tax"`            // 稅額
-	Remark        string       `json:"remark"`         // 備註
-	OrderPriority uint         `json:"order_priority"` // 排序編號
-	LotNo         string       `json:"lot_no"`         // 批號
-	ExpiryDate    string       `json:"expiry_date"`    // 效期
+	ID            uint    `json:"id"`             // 流水號
+	ItemID        uint    `json:"item_id"`        // 商品關聯ID
+	Quantity      float64 `json:"quantity"`       // 數量
+	Giveaway      float64 `json:"giveaway"`       // 贈量
+	Price         float64 `json:"price"`          // 單價
+	Discount      float64 `json:"discount"`       // 折讓
+	Sum           float64 `json:"sum"`            // 稅前合計(Sum + Tax - Discount)
+	Total         float64 `json:"total"`          // 稅後總計
+	TaxType       uint    `json:"tax_type"`       // 稅別
+	Tax           float64 `json:"tax"`            // 稅額
+	Remark        string  `json:"remark"`         // 備註
+	OrderPriority uint    `json:"order_priority"` // 排序編號
+	LotNo         string  `json:"lot_no"`         // 批號
+	ExpiryDate    string  `json:"expiry_date"`    // 效期
+	BasicItemID   uint    `json:"basic_item_id"`  // 過賬商品
+	PostingQty    float64 `json:"posting_qty"`    // 過賬數量
 	//RequisitionID	*uint	requisition_id	請購編號
 }
 
@@ -103,20 +105,21 @@ type PurchaseReturnUpdated struct {
 }
 
 type PurchaseReturnDetail struct {
-	ID            uint         `json:"id"`             // 流水號
-	ItemID        uint         `json:"item_id"`        // 商品關聯ID
-	ItemDetails   []ItemDetail `json:"item_details"`   // 商品明細
-	Quantity      float64      `json:"quantity"`       // 數量
-	Giveaway      float64      `json:"giveaway"`       // 贈量
-	Price         float64      `json:"price"`          // 單價
-	Discount      float64      `json:"discount"`       // 折讓
-	Sum           float64      `json:"sum"`            // 稅前合計(Sum + Tax - Discount)
-	Total         float64      `json:"total"`          // 稅後總計
-	TaxType       uint         `json:"tax_type"`       // 稅別
-	Tax           float64      `json:"tax"`            // 稅額
-	Remark        string       `json:"remark"`         // 備註
-	OrderPriority uint         `json:"order_priority"` // 排序編號
-	LotNo         string       `json:"lot_no"`         // 批號
+	ID            uint    `json:"id"`             // 流水號
+	ItemID        uint    `json:"item_id"`        // 商品關聯ID
+	Quantity      float64 `json:"quantity"`       // 數量
+	Giveaway      float64 `json:"giveaway"`       // 贈量
+	Price         float64 `json:"price"`          // 單價
+	Discount      float64 `json:"discount"`       // 折讓
+	Sum           float64 `json:"sum"`            // 稅前合計(Sum + Tax - Discount)
+	Total         float64 `json:"total"`          // 稅後總計
+	TaxType       uint    `json:"tax_type"`       // 稅別
+	Tax           float64 `json:"tax"`            // 稅額
+	Remark        string  `json:"remark"`         // 備註
+	OrderPriority uint    `json:"order_priority"` // 排序編號
+	LotNo         string  `json:"lot_no"`         // 批號
+	BasicItemID   uint    `json:"basic_item_id"`  // 過賬商品
+	PostingQty    float64 `json:"posting_qty"`    // 過賬數量
 }
 
 type ShippingUpdated struct {
@@ -141,21 +144,22 @@ type ShippingUpdated struct {
 }
 
 type ShippingDetail struct {
-	ID            uint         `json:"id"`             // 流水號
-	ItemID        uint         `json:"item_id"`        // 商品關聯ID
-	ItemDetails   []ItemDetail `json:"item_details"`   // 商品明細
-	Quantity      float64      `json:"quantity"`       // 數量
-	Giveaway      float64      `json:"giveaway"`       // 贈量
-	Price         float64      `json:"price"`          // 單價
-	Discount      float64      `json:"discount"`       // 折讓
-	Sum           float64      `json:"sum"`            // 稅前合計(Sum + Tax - Discount)
-	Total         float64      `json:"total"`          // 稅後總計
-	TaxType       uint         `json:"tax_type"`       // 稅別
-	Tax           float64      `json:"tax"`            // 稅額
-	Remark        string       `json:"remark"`         // 備註
-	OrderPriority uint         `json:"order_priority"` // 排序編號
-	LotNo         string       `json:"lot_no"`         // 批號
-	ExpiryDate    string       `json:"expiry_date"`    // 效期
+	ID            uint    `json:"id"`             // 流水號
+	ItemID        uint    `json:"item_id"`        // 商品關聯ID
+	Quantity      float64 `json:"quantity"`       // 數量
+	Giveaway      float64 `json:"giveaway"`       // 贈量
+	Price         float64 `json:"price"`          // 單價
+	Discount      float64 `json:"discount"`       // 折讓
+	Sum           float64 `json:"sum"`            // 稅前合計(Sum + Tax - Discount)
+	Total         float64 `json:"total"`          // 稅後總計
+	TaxType       uint    `json:"tax_type"`       // 稅別
+	Tax           float64 `json:"tax"`            // 稅額
+	Remark        string  `json:"remark"`         // 備註
+	OrderPriority uint    `json:"order_priority"` // 排序編號
+	LotNo         string  `json:"lot_no"`         // 批號
+	ExpiryDate    string  `json:"expiry_date"`    // 效期
+	BasicItemID   uint    `json:"basic_item_id"`  // 過賬商品
+	PostingQty    float64 `json:"posting_qty"`    // 過賬數量
 }
 
 type ShippingReturnUpdated struct {
@@ -177,20 +181,21 @@ type ShippingReturnUpdated struct {
 }
 
 type ShippingReturnDetail struct {
-	ID            uint         `json:"id"`             // 流水號
-	ItemID        uint         `json:"item_id"`        // 商品關聯ID
-	ItemDetails   []ItemDetail `json:"item_details"`   // 商品明細
-	Quantity      float64      `json:"quantity"`       // 數量
-	Giveaway      float64      `json:"giveaway"`       // 贈量
-	Price         float64      `json:"price"`          // 單價
-	Discount      float64      `json:"discount"`       // 折讓
-	Sum           float64      `json:"sum"`            // 稅前合計(Sum + Tax - Discount)
-	Total         float64      `json:"total"`          // 稅後總計
-	TaxType       uint         `json:"tax_type"`       // 稅別
-	Tax           float64      `json:"tax"`            // 稅額
-	Remark        string       `json:"remark"`         // 備註
-	OrderPriority uint         `json:"order_priority"` // 排序編號
-	LotNo         string       `json:"lot_no"`         // 批號
+	ID            uint    `json:"id"`             // 流水號
+	ItemID        uint    `json:"item_id"`        // 商品關聯ID
+	Quantity      float64 `json:"quantity"`       // 數量
+	Giveaway      float64 `json:"giveaway"`       // 贈量
+	Price         float64 `json:"price"`          // 單價
+	Discount      float64 `json:"discount"`       // 折讓
+	Sum           float64 `json:"sum"`            // 稅前合計(Sum + Tax - Discount)
+	Total         float64 `json:"total"`          // 稅後總計
+	TaxType       uint    `json:"tax_type"`       // 稅別
+	Tax           float64 `json:"tax"`            // 稅額
+	Remark        string  `json:"remark"`         // 備註
+	OrderPriority uint    `json:"order_priority"` // 排序編號
+	LotNo         string  `json:"lot_no"`         // 批號
+	BasicItemID   uint    `json:"basic_item_id"`  // 過賬商品
+	PostingQty    float64 `json:"posting_qty"`    // 過賬數量
 }
 
 type StocktakeUpdated struct {
@@ -243,19 +248,14 @@ type TransferUpdated struct {
 }
 
 type TransferDetail struct {
-	ID            uint         `json:"id"`             // 流水號
-	ItemID        uint         `json:"item_id"`        // 商品關聯ID
-	ItemDetails   []ItemDetail `json:"item_details"`   // 商品明細
-	Quantity      float64      `json:"quantity"`       // 數量
-	Remark        string       `json:"remark"`         // 備註
-	OrderPriority uint         `json:"order_priority"` // 排序編號
-	LotNo         string       `json:"lot_no"`         // 批號
-	ExpiryDate    string       `json:"expiry_date"`    // 效期
+	ID            uint    `json:"id"`             // 流水號
+	ItemID        uint    `json:"item_id"`        // 商品關聯ID
+	Quantity      float64 `json:"quantity"`       // 數量
+	Remark        string  `json:"remark"`         // 備註
+	OrderPriority uint    `json:"order_priority"` // 排序編號
+	LotNo         string  `json:"lot_no"`         // 批號
+	ExpiryDate    string  `json:"expiry_date"`    // 效期
+	BasicItemID   uint    `json:"basic_item_id"`  // 過賬商品
+	PostingQty    float64 `json:"posting_qty"`    // 過賬數量
 	//RequisitionID	*uint	requisition_id	請購編號
-}
-
-type ItemDetail struct {
-	ID          uint    `json:"id"`            // 流水號
-	BasicItemID uint    `json:"basic_item_id"` // 基品商本關聯ID
-	Quantity    float64 `json:"quantity"`      // 包裝量
 }
