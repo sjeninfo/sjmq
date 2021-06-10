@@ -17,6 +17,20 @@ type AreaUpdated struct {
 	QuickCode string    `json:"quick_code"` // 簡碼
 }
 
+
+type SubjectDeleted struct {
+	ID uint `json:"id"`
+}
+
+type SubjectUpdated struct {
+	ID        uint      `json:"id"`         // 流水號
+	CreatedAt time.Time `json:"created_at"` // 建檔日期
+	UpdatedAt time.Time `json:"updated_at"` // 修改日期
+	No        string    `json:"no"`         // 科目編號(unique)
+	Name      string    `json:"name"`       // 科目名稱
+	QuickCode string    `json:"quick_code"` // 簡碼
+}
+
 type BankAccountDeleted struct {
 	ID uint `json:"id"`
 }
