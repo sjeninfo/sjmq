@@ -17,7 +17,6 @@ type AreaUpdated struct {
 	QuickCode string    `json:"quick_code"` // 簡碼
 }
 
-
 type SubjectDeleted struct {
 	ID uint `json:"id"`
 }
@@ -312,7 +311,7 @@ type ItemUpdated struct {
 	TaxType           uint      `json:"tax_type"`            // 稅別(1.應稅內含 2.應稅外加 3.零稅率 4.免稅)
 	Spec              string    `json:"spec"`                // 規格說明
 	QuickCode         string    `json:"quick_code"`          // 簡碼
-	SkuNo             string    `json:"sku_no"`              // 貨號
+	ProviderItemNos   []string  `json:"provider_item_nos"`   // 廠商商品編號(貨號)
 	BonusID           uint      `json:"bonus_id"`            // 獎金別關聯ID
 	BarcodeFlag       bool      `json:"barcode_flag"`        // 是否印出條碼
 	AverageCost       float64   `json:"average_cost"`        // 平均成本
@@ -533,11 +532,29 @@ type StoreItemDeleted struct {
 }
 
 type StoreItemUpdated struct {
-	ID        uint      `json:"id"`         // 流水號
-	CreatedAt time.Time `json:"created_at"` // 建檔日期
-	UpdatedAt time.Time `json:"updated_at"` // 修改日期
-	StoreID   uint
-	ItemID    uint
+	ID                   uint      `json:"id"`                     // 流水號
+	CreatedAt            time.Time `json:"created_at"`             // 建檔日期
+	UpdatedAt            time.Time `json:"updated_at"`             // 修改日期
+	StoreID              uint      `json:"store_id"`               // 門市關聯id
+	ItemID               uint      `json:"item_id"`                // 商品關聯id
+	SafetyQty            float64   `json:"safety_qty"`             // 安全存量
+	UpperQty             float64   `json:"upper_qty"`              // 採購上限量
+	LowerQty             float64   `json:"lower_qty"`              // 採購下限量
+	DynamicOrderStandard uint      `json:"dynamic_order_standard"` // 動態訂貨基準 (0.無 1.一週 2.12個月(365Day) 3.1個日(1Day) 4.2個日(2Day) 5.3個日(3Day) 6.4個日(4Day) 7.5個日(5Day) 8.6個日(3Day) 9.兩週 10.三週 11.一個月 12.兩個月 13.三個月 14.四個月(120Day) 15.五個月(150Day) 16.六個月(180Day))
+	DynamicOrderRate     uint      `json:"dynamic_order_rate"`     // 動態訂貨服務率 (0.未設定 1.50% 2.75% 3.79% 4.80% 5.84% 6.85% 7.90% 8.93% 9.95% 10.99% 11.100%)
+}
+
+type PriceDeleted struct {
+	ID uint `json:"id"`
+}
+
+type PriceUpdated struct {
+	ID              uint      `json:"id"`                // 流水號
+	CreatedAt       time.Time `json:"created_at"`        // 建檔日期
+	UpdatedAt       time.Time `json:"updated_at"`        // 修改日期
+	StoreItemID     uint      `json:"store_item_id"`     // 關聯門市商品ID
+	PriceCategoryID uint      `json:"price_category_id"` // 關聯價格類別ID
+	Amount          float64   `json:"amount"`            // 金額
 }
 
 type UnitDeleted struct {
