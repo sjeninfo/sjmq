@@ -439,11 +439,19 @@ type PriceCategoryDeleted struct {
 	ID uint `json:"id"`
 }
 
+type PriceCategoryBatchDeleted struct {
+	Data []PriceCategoryDeleted `json:"data"`
+}
+
 type PriceCategoryUpdated struct {
 	ID        uint      `json:"id"`         // 流水號
 	CreatedAt time.Time `json:"created_at"` // 建檔日期
 	UpdatedAt time.Time `json:"updated_at"` // 修改日期
 	Name      string    `json:"name"`       // 價格名稱
+}
+
+type PriceCategoryBatchUpdated struct {
+	Data []PriceCategoryUpdated `json:"data"`
 }
 
 type PriceConfigDeleted struct {
@@ -574,6 +582,10 @@ type StoreDeleted struct {
 	ID uint `json:"id"`
 }
 
+type StoreBatchDeleted struct {
+	Data []StoreDeleted `json:"data"`
+}
+
 type StoreUpdated struct {
 	ID                uint      `json:"id"`                  // 流水號
 	CreatedAt         time.Time `json:"created_at"`          // 建檔日期
@@ -603,6 +615,10 @@ type StoreUpdated struct {
 	Blocked           bool      `json:"blocked"`             // 停用
 	UpdatedByID       *uint     `json:"updated_by_id"`       // 修改人關聯ID
 	CreatedByID       *uint     `json:"created_by_id"`       // 建檔人關聯ID
+}
+
+type StoreBatchUpdated struct {
+	Data []StoreUpdated `json:"data"`
 }
 
 type WarehouseDeleted struct {
