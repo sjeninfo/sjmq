@@ -539,6 +539,10 @@ type StoreItemDeleted struct {
 	ID uint `json:"id"`
 }
 
+type StoreItemBatchDeleted struct {
+	Data []StoreItemDeleted `json:"data"`
+}
+
 type StoreItemUpdated struct {
 	ID                   uint      `json:"id"`                     // 流水號
 	CreatedAt            time.Time `json:"created_at"`             // 建檔日期
@@ -550,6 +554,10 @@ type StoreItemUpdated struct {
 	LowerQty             float64   `json:"lower_qty"`              // 採購下限量
 	DynamicOrderStandard uint      `json:"dynamic_order_standard"` // 動態訂貨基準 (0.無 1.一週 2.12個月(365Day) 3.1個日(1Day) 4.2個日(2Day) 5.3個日(3Day) 6.4個日(4Day) 7.5個日(5Day) 8.6個日(3Day) 9.兩週 10.三週 11.一個月 12.兩個月 13.三個月 14.四個月(120Day) 15.五個月(150Day) 16.六個月(180Day))
 	DynamicOrderRate     uint      `json:"dynamic_order_rate"`     // 動態訂貨服務率 (0.未設定 1.50% 2.75% 3.79% 4.80% 5.84% 6.85% 7.90% 8.93% 9.95% 10.99% 11.100%)
+}
+
+type StoreItemBatchUpdated struct {
+	Data []StoreItemUpdated `json:"data"`
 }
 
 type PriceDeleted struct {
@@ -582,10 +590,6 @@ type StoreDeleted struct {
 	ID uint `json:"id"`
 }
 
-type StoreBatchDeleted struct {
-	Data []StoreDeleted `json:"data"`
-}
-
 type StoreUpdated struct {
 	ID                uint      `json:"id"`                  // 流水號
 	CreatedAt         time.Time `json:"created_at"`          // 建檔日期
@@ -615,10 +619,6 @@ type StoreUpdated struct {
 	Blocked           bool      `json:"blocked"`             // 停用
 	UpdatedByID       *uint     `json:"updated_by_id"`       // 修改人關聯ID
 	CreatedByID       *uint     `json:"created_by_id"`       // 建檔人關聯ID
-}
-
-type StoreBatchUpdated struct {
-	Data []StoreUpdated `json:"data"`
 }
 
 type WarehouseDeleted struct {
