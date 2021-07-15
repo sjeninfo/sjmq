@@ -564,6 +564,8 @@ type PriceUpdated struct {
 	ID              uint      `json:"id"`                // 流水號
 	CreatedAt       time.Time `json:"created_at"`        // 建檔日期
 	UpdatedAt       time.Time `json:"updated_at"`        // 修改日期
+	StoreID         uint      `json:"store_id"`          // 關聯門市ID
+	ItemID          uint      `json:"item_id"`           // 關聯商品ID
 	StoreItemID     uint      `json:"store_item_id"`     // 關聯門市商品ID
 	PriceCategoryID uint      `json:"price_category_id"` // 關聯價格類別ID
 	Amount          float64   `json:"amount"`            // 金額
