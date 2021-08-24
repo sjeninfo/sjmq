@@ -72,9 +72,22 @@ type BasicItemUpdated struct {
 	AllowInventory bool    `json:"allow_inventory"` // 允許盤點
 }
 
+type ColorCodeDeleted struct {
+	ID uint `json:"id"` // 流水號
+}
+
+type ColorCodeUpdated struct {
+	ID          uint      `json:"id"`          // 流水號
+	CreatedAt   time.Time `json:"created_at"`  // 建檔日期
+	UpdatedAt   time.Time `json:"updated_at"`  // 修改日期
+	Code        string    `json:"code"`        // 色碼(unique)
+	Description string    `json:"description"` // 說明
+}
+
 type ContactDeleted struct {
 	ID uint `json:"id"`
 }
+
 type ContactUpdated struct {
 	ID              uint      `json:"id"`               // 流水號
 	CreatedAt       time.Time `json:"created_at"`       // 建檔日期
@@ -301,46 +314,46 @@ type ItemDeleted struct {
 }
 
 type ItemUpdated struct {
-	ID                uint      `json:"id"`                  // ID
-	CreatedAt         time.Time `json:"created_at"`          // 建檔日期
-	UpdatedAt         time.Time `json:"updated_at"`          // 修改日期
-	No                string    `json:"no"`                  // 編號
-	Name              string    `json:"name"`                // 名稱
-	SubcategoryID     uint      `json:"subcategory_id"`      // 小類關聯ID
-	SpecialCategoryID uint      `json:"special_category_id"` // 特殊分類 `json:"id
-	TaxType           uint      `json:"tax_type"`            // 稅別(1.應稅內含 2.應稅外加 3.零稅率 4.免稅)
-	Spec              string    `json:"spec"`                // 規格說明
-	QuickCode         string    `json:"quick_code"`          // 簡碼
-	ProviderItemNos   []string  `json:"provider_item_nos"`   // 廠商商品編號(貨號)
-	BonusID           uint      `json:"bonus_id"`            // 獎金別關聯ID
-	BarcodeFlag       bool      `json:"barcode_flag"`        // 是否印出條碼
-	AverageCost       float64   `json:"average_cost"`        // 平均成本
-	WholesaleCost     float64   `json:"wholesale_cost"`      // 批發成本
-	UnitID            uint      `json:"unit_id"`             // 單位關聯ID
-	PromotionID       uint      `json:"promotion_id"`        // 促銷類別關聯ID
-	UpcCode1          string    `json:"upc_code1"`           // 國際條碼1
-	UpcCode2          string    `json:"upc_code2"`           // 國際條碼2
-	UpcCode3          string    `json:"upc_code3"`           // 國際條碼3
-	OriginID          uint      `json:"origin_id"`           // 產地關聯ID
-	Remark            string    `json:"remark"`              // 備註
-	AllowSale         bool      `json:"allow_sale"`          // 允許銷售
-	AllowPosExchange  bool      `json:"allow_pos_exchange"`  // 允許POS退換貨
-	AllowPromotion    bool      `json:"allow_promotion"`     // 允許促銷
-	SkuFlag           bool      `json:"sku_flag"`            // 計算SKU
-	OrderMethod       uint      `json:"order_method"`        // 採購方式(1.自行(人工)訂貨-預設 2.庫存缺貨轉訂貨-自動補貨處理 3.銷售動態轉訂貨-保留尚無功能)
-	AllowInquiry      bool      `json:"allow_inquiry"`       // 允許詢價
-	AllowRequisition  bool      `json:"allow_requisition"`   // 允許請購
-	AllowDispatch     bool      `json:"allow_dispatch"`      // 允許調撥
-	AllowPricing      bool      `json:"allow_pricing"`       // 允許變價(開放售價)
-	DeliveryMethod    uint      `json:"delivery_method"`     // 配送方式(1.自行配送(總部物流) 2.廠商直送 3.區域經銷商配送 4.工廠配送 5.其他配送方式 6.總代理配送)
-	PosProperty       uint      `json:"pos_property"`        // 銷售屬性(1.正常品 2.折現金/折價券 3.不扣庫商品 4.贈品點數商品 5.代收現金3 6.代收現金4 7.5代收現金5 8.5環保折讓 9.代用條碼 10.其他)
-	DrugProperty      uint      `json:"drug_property"`       // 藥品屬性(1.非藥品 2.一般藥品 3.指示用藥 4.處方用藥)
-	Turnover          float64   `json:"turnover"`            // 周轉率
-	PackageType       uint      `json:"package_type"`        // 包裝類型(1.基本商品 2.大包裝 3.組合包裝)
-	Blocked           bool      `json:"blocked"`             // 停用
-	Used              bool      `json:"used"`                // 使用過期標
-	UpdatedByID       *uint     `json:"updated_by_id"`       // 修改人關聯ID
-	CreatedByID       *uint     `json:"created_by_id"`       // 建檔人關聯ID
+	ID               uint      `json:"id"`                 // ID
+	CreatedAt        time.Time `json:"created_at"`         // 建檔日期
+	UpdatedAt        time.Time `json:"updated_at"`         // 修改日期
+	No               string    `json:"no"`                 // 編號
+	Name             string    `json:"name"`               // 名稱
+	SubcategoryID    uint      `json:"subcategory_id"`     // 小類關聯ID
+	ColorCodeID      *uint     `json:"color_code_id"`      // 色標關聯ID
+	TaxType          uint      `json:"tax_type"`           // 稅別(1.應稅內含 2.應稅外加 3.零稅率 4.免稅)
+	Spec             string    `json:"spec"`               // 規格說明
+	QuickCode        string    `json:"quick_code"`         // 簡碼
+	ProviderItemNos  []string  `json:"provider_item_nos"`  // 廠商商品編號(貨號)
+	BonusID          uint      `json:"bonus_id"`           // 獎金別關聯ID
+	BarcodeFlag      bool      `json:"barcode_flag"`       // 是否印出條碼
+	AverageCost      float64   `json:"average_cost"`       // 平均成本
+	WholesaleCost    float64   `json:"wholesale_cost"`     // 批發成本
+	UnitID           uint      `json:"unit_id"`            // 單位關聯ID
+	PromotionID      uint      `json:"promotion_id"`       // 促銷類別關聯ID
+	UpcCode1         string    `json:"upc_code1"`          // 國際條碼1
+	UpcCode2         string    `json:"upc_code2"`          // 國際條碼2
+	UpcCode3         string    `json:"upc_code3"`          // 國際條碼3
+	OriginID         uint      `json:"origin_id"`          // 產地關聯ID
+	Remark           string    `json:"remark"`             // 備註
+	AllowSale        bool      `json:"allow_sale"`         // 允許銷售
+	AllowPosExchange bool      `json:"allow_pos_exchange"` // 允許POS退換貨
+	AllowPromotion   bool      `json:"allow_promotion"`    // 允許促銷
+	SkuFlag          bool      `json:"sku_flag"`           // 計算SKU
+	OrderMethod      uint      `json:"order_method"`       // 採購方式(1.自行(人工)訂貨-預設 2.庫存缺貨轉訂貨-自動補貨處理 3.銷售動態轉訂貨-保留尚無功能)
+	AllowInquiry     bool      `json:"allow_inquiry"`      // 允許詢價
+	AllowRequisition bool      `json:"allow_requisition"`  // 允許請購
+	AllowDispatch    bool      `json:"allow_dispatch"`     // 允許調撥
+	AllowPricing     bool      `json:"allow_pricing"`      // 允許變價(開放售價)
+	DeliveryMethod   uint      `json:"delivery_method"`    // 配送方式(1.自行配送(總部物流) 2.廠商直送 3.區域經銷商配送 4.工廠配送 5.其他配送方式 6.總代理配送)
+	PosProperty      uint      `json:"pos_property"`       // 銷售屬性(1.正常品 2.折現金/折價券 3.不扣庫商品 4.贈品點數商品 5.代收現金3 6.代收現金4 7.5代收現金5 8.5環保折讓 9.代用條碼 10.其他)
+	DrugProperty     uint      `json:"drug_property"`      // 藥品屬性(1.非藥品 2.一般藥品 3.指示用藥 4.處方用藥)
+	Turnover         float64   `json:"turnover"`           // 周轉率
+	PackageType      uint      `json:"package_type"`       // 包裝類型(1.基本商品 2.大包裝 3.組合包裝)
+	Blocked          bool      `json:"blocked"`            // 停用
+	Used             bool      `json:"used"`               // 使用過期標
+	UpdatedByID      *uint     `json:"updated_by_id"`      // 修改人關聯ID
+	CreatedByID      *uint     `json:"created_by_id"`      // 建檔人關聯ID
 }
 
 type ItemCategoryDeleted struct {
