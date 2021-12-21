@@ -1,0 +1,37 @@
+package events
+
+type AreaImported []AreaUpdated
+type SubjectImported []SubjectUpdated
+type BankAccountImported []BankAccountUpdated
+type BasicItemImported []BasicItemUpdated
+type ColorCodeImported []ColorCodeUpdated
+type ContactImported []ContactUpdated
+type ContactCategoryImported []ContactCategoryUpdated
+type CustomerCategoryImported []CustomerCategoryUpdated
+type CustomerImported []CustomerUpdated
+type DeliveryImported []DeliveryUpdated
+type DepartmentImported []DepartmentUpdated
+type DiscountImported []DiscountUpdated
+type EmployeeBonusImported []EmployeeBonusUpdated
+type EmployeeImported []EmployeeUpdated
+type ItemBonusImported []ItemBonusUpdated
+type ItemImported []ItemUpdated
+type ItemCategoryImported []ItemCategoryUpdated
+type ItemMainCategoryImported []ItemMainCategoryUpdated
+type ItemSubcategoryImported []ItemSubcategoryUpdated
+type OriginImported []OriginUpdated
+type PackagedItemImported []PackagedItemUpdated
+type PictureImported []PictureUpdated
+type PositionImported []PositionUpdated
+type PriceCategoryImported []PriceCategoryUpdated
+type PriceConfigImported []PriceConfigUpdated
+type PromotionImported []PromotionUpdated
+type ProviderCategoryImported []ProviderCategoryUpdated
+type ProviderImported []ProviderUpdated
+type StoreItemImported []StoreItemUpdated
+type StoreItemBatchImported []StoreItemBatchUpdated
+type PriceImported []PriceUpdated
+type PriceBatchImported []PriceBatchUpdated
+type UnitImported []UnitUpdated
+type StoreImported []StoreUpdated
+type WarehouseImported []WarehouseUpdated
