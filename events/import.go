@@ -33,5 +33,6 @@ type StoreItemBatchImported []StoreItemBatchUpdated
 type PriceImported []PriceUpdated
 type PriceBatchImported []PriceBatchUpdated
 type UnitImported []UnitUpdated
+type UserImported []UserUpdated
 type StoreImported []StoreUpdated
 type WarehouseImported []WarehouseUpdated
