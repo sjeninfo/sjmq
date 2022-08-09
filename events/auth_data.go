@@ -33,9 +33,9 @@ type Pharmacy struct {
 	Name   string `json:"name"`
 }
 type PharmacyEmployee struct {
-	UserID     uint   `json:"user_id"`
-	Name       string `json:"name"`
-	PharmacyID uint   `json:"pharmacy_id"`
+	UserID         uint   `json:"user_id"`
+	Name           string `json:"name"`
+	PharmacyUserID uint   `json:"pharmacy_user_id"`
 }
 type Consumer struct {
 	UserID         uint   `json:"user_id"`
