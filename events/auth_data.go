@@ -24,24 +24,20 @@ type UserUpdated struct {
 }
 
 type SjenEmployee struct {
-	ID     uint   `json:"id"`
 	UserID uint   `json:"user_id"`
 	Name   string `json:"name"`
 }
 
 type Pharmacy struct {
-	ID     uint   `json:"id"`
 	UserID uint   `json:"user_id"`
 	Name   string `json:"name"`
 }
 type PharmacyEmployee struct {
-	ID         uint   `json:"id"`
 	UserID     uint   `json:"user_id"`
 	Name       string `json:"name"`
 	PharmacyID uint   `json:"pharmacy_id"`
 }
 type Consumer struct {
-	ID             uint   `json:"id"`
 	UserID         uint   `json:"user_id"`
 	Name           string `json:"name"`
 	FireBaseToken  string `json:"fire_base_token"`
