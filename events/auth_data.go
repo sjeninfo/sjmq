@@ -38,10 +38,9 @@ type PharmacyEmployee struct {
 	PharmacyUserID uint   `json:"pharmacy_user_id"`
 }
 type Consumer struct {
-	UserID         uint   `json:"user_id"`
-	Name           string `json:"name"`
-	FireBaseToken  string `json:"fire_base_token"`
-	IdentityNumber string `json:"identity_number"`
-	MobilePhone    string `json:"mobile_phone"`
-	Email          string `json:"email"`
+	UserID        uint   `json:"user_id"`
+	Name          string `json:"name"`
+	FireBaseToken string `json:"fire_base_token"`
+	MobilePhone   string `json:"mobile_phone"`
+	Email         string `json:"email"`
 }
