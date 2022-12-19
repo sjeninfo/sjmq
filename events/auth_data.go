@@ -1,7 +1,6 @@
 package events
 
 import (
-	"gorm.io/gorm"
 	"time"
 )
 
@@ -53,23 +52,26 @@ type Consumer struct {
 	Email         string    `json:"email"`
 }
 
+type LicenseDeleted struct {
+	ID uint `json:"id"`
+}
 type LicenseUpdated struct {
 	ID        uint             `json:"id"`
 	CreatedAt time.Time        `json:"created_at" `
 	UpdatedAt time.Time        `json:"updated_at"`
-	DeletedAt gorm.DeletedAt   `json:"deleted_at"`
 	UserID    uint             `json:"user_id"`
 	Blocked   bool             `json:"blocked"`
 	Details   []*LicenseDetail `json:"details" `
 }
-
+type LicenseDetailDeleted struct {
+	ID uint `json:"id"`
+}
 type LicenseDetail struct {
-	ID        uint           `json:"id"`
-	CreatedAt time.Time      `json:"created_at"`
-	UpdatedAt time.Time      `json:"updated_at"`
-	DeletedAt gorm.DeletedAt `json:"deleted_at"`
-	LicenseID uint           `json:"license_id"`
-	ProductID uint           `json:"product_id"`
-	StartAt   time.Time      `json:"start_at"`
-	EndAt     time.Time      `json:"end_at"`
+	ID        uint      `json:"id"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+	LicenseID uint      `json:"license_id"`
+	ProductID uint      `json:"product_id"`
+	StartAt   time.Time `json:"start_at"`
+	EndAt     time.Time `json:"end_at"`
 }
