@@ -36,3 +36,4 @@ type UnitImported []UnitUpdated
 type UserImported []UserUpdated
 type StoreImported []StoreUpdated
 type WarehouseImported []WarehouseUpdated
+type LicenseImported []LicenseUpdated
