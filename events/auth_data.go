@@ -31,9 +31,10 @@ type SjenEmployee struct {
 type Pharmacy struct {
 	UserID    uint    `json:"user_id"`
 	Name      string  `json:"name"`
-	Remark    string  `json:"remark"`    // 備註
-	Address   string  `json:"address"`   // 地址
-	Phone     string  `json:"phone"`     // 電話
+	Remark    string  `json:"remark"`  // 備註
+	Address   string  `json:"address"` // 地址
+	Phone     string  `json:"phone"`   // 電話
+	Email     string  `json:"email"`
 	Latitude  float64 `json:"latitude"`  // 緯度
 	Longitude float64 `json:"longitude"` // 經度
 }
