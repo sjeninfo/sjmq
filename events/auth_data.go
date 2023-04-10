@@ -18,6 +18,8 @@ type UserUpdated struct {
 	Identity         string            `json:"identity"`          // 身分別
 	BlockedAt        *time.Time        `json:"blocked_at"`        // 停用時間
 	SjenEmployee     *SjenEmployee     `json:"sjen_employee"`     // 先勁員工資料
+	Headquarters     *Headquarters     `json:"headquarters"`      // 總部資料
+	HeadquartersEmp  *HeadquartersEmp  `json:"headquarters_emp"`  // 總部員工資料
 	Pharmacy         *Pharmacy         `json:"pharmacy"`          // 藥局資料
 	PharmacyEmployee *PharmacyEmployee `json:"pharmacy_employee"` // 藥局員工資料
 	Consumer         *Consumer         `json:"consumer"`          // 消費者資料
@@ -28,15 +30,25 @@ type SjenEmployee struct {
 	Name   string `json:"name"`
 }
 
+type Headquarters struct {
+	UserID uint   `json:"user_id"` // 用戶主檔關聯ID
+	Name   string `json:"name"`    // 姓名
+}
+type HeadquartersEmp struct {
+	UserID             uint   `json:"user_id" gorm:"primaryKey;Column:user_id"`                // 用戶主檔關聯ID
+	Name               string `json:"name" gorm:"Column:name;size:20"`                         // 姓名
+	HeadquartersUserID uint   `json:"headquarters_user_id" gorm:"Column:headquarters_user_id"` // 藥局關聯ID
+}
 type Pharmacy struct {
-	UserID    uint    `json:"user_id"`
-	Name      string  `json:"name"`
-	Remark    string  `json:"remark"`  // 備註
-	Address   string  `json:"address"` // 地址
-	Phone     string  `json:"phone"`   // 電話
-	Email     string  `json:"email"`
-	Latitude  float64 `json:"latitude"`  // 緯度
-	Longitude float64 `json:"longitude"` // 經度
+	UserID             uint    `json:"user_id"`
+	HeadquartersUserID uint    `json:"headquarters_user_id"`
+	Name               string  `json:"name"`
+	Remark             string  `json:"remark"`  // 備註
+	Address            string  `json:"address"` // 地址
+	Phone              string  `json:"phone"`   // 電話
+	Email              string  `json:"email"`
+	Latitude           float64 `json:"latitude"`  // 緯度
+	Longitude          float64 `json:"longitude"` // 經度
 }
 type PharmacyEmployee struct {
 	UserID         uint   `json:"user_id"`
