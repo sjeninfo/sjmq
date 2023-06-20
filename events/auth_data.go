@@ -88,3 +88,12 @@ type LicenseDetail struct {
 	StartAt   time.Time `json:"start_at"`
 	EndAt     time.Time `json:"end_at"`
 }
+type ProductUpdated struct {
+	ID        uint      `json:"id"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+	Name      string    `json:"name"`
+}
+type ProductDeleted struct {
+	ID uint `json:"id"`
+}
