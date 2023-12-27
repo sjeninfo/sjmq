@@ -59,6 +59,7 @@ type Consumer struct {
 	UserID        uint      `json:"user_id"`
 	Name          string    `json:"name"`
 	FireBaseToken string    `json:"fire_base_token"`
+	LineToken     string    `json:"line_token"`
 	Gender        string    `json:"gender"`
 	Birthday      time.Time `json:"birthday"`
 	MobilePhone   string    `json:"mobile_phone"`
